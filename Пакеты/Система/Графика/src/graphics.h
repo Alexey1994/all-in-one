@@ -7,13 +7,14 @@ typedef struct
     N_32 width;
     N_32 height;
     Byte *data;
+    Byte *system_graphics;
 }
 Graphics;
 
 
-//export procedure _initialize_graphics (Graphics *graphics, N_32 width, N_32 height);
-
-export procedure initialize_graphics (N_32 width, N_32 height, N_32 frames_per_second, procedure (*draw)(Byte *data));
+import procedure initialize_graphics   (Graphics *graphics, N_32 width, N_32 height);
+import procedure draw_graphics         (Graphics *graphics);
+import procedure deinitialize_graphics (Graphics *graphics);
 
 
 #endif // GRAPHICS_H_INCLUDED

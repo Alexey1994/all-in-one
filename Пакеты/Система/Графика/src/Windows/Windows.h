@@ -1,3 +1,5 @@
+#include <system/memory.h>
+
 #define UNIQUE_FOR_EACH_WINDOW_CONTEXT_CLASS_STYLE  32
 
 #define CLOSE_WINDOW_MESSAGE                        16
@@ -117,7 +119,6 @@ Windows_Message;
 
 typedef struct
 {
-    Graphics      graphics;
     Window_Class  class;
     Byte         *context;
     Byte         *window;

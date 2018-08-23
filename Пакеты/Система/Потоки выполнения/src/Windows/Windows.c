@@ -1,4 +1,4 @@
-function Byte* run_thread (procedure (*thread_function)(), Byte *arg)
+export function Byte* run_thread (procedure (*thread_function)(), Byte *arg)
 {
 	N_32 thread_id;
 
@@ -8,7 +8,7 @@ function Byte* run_thread (procedure (*thread_function)(), Byte *arg)
 }
 
 
-procedure sleep_thread (N_32 milliseconds)
+export procedure sleep_thread (N_32 milliseconds)
 {
 	Sleep(milliseconds);
 }

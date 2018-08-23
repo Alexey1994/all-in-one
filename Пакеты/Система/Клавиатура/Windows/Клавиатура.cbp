@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Graphics" />
+		<Option title="Клавиатура" />
 		<Option pch_mode="2" />
 		<Option compiler="tcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/main.exe" prefix_auto="0" extension_auto="0" />
+				<Option output="bin/Debug/keyboard.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="bin/Debug" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -17,24 +17,22 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/main" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/keyboard" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="tcc" />
 				<Compiler>
-					<Add option="-O2" />
 				</Compiler>
+				<Linker>
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-w" />
 		</Compiler>
 		<Linker>
 			<Add library="user32" />
-			<Add library="gdi32" />
-			<Add library="memory" />
 		</Linker>
-		<Unit filename="../src/graphics.c">
+		<Unit filename="../src/keyboard.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
