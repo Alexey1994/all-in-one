@@ -6,8 +6,8 @@ typedef struct
 Windows_Point;
 
 
-private import function N_32 GetAsyncKeyState (N_32 key);
-private import function N_32 GetCursorPos     (Windows_Point *coords);
+import function N_32 GetAsyncKeyState (N_32 key);
+import function N_32 GetCursorPos     (Windows_Point *coords);
 
 
 #include "Windows.c"

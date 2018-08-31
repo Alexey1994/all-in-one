@@ -73,6 +73,15 @@ REM @set bin="c:\tcc\bin"
 @copy rectangle.h "%headers%\graphics\2D\"
 @cd ../../
 
+@cd "Линия\src"
+@tcc -shared line.c -o line.dll "%def%\graphics.def"
+@copy line.dll "%bin%\"
+@del line.dll
+@copy line.def "%def%\"
+@del line.def
+@copy line.h "%headers%\graphics\2D\"
+@cd ../../
+
 @mkdir "%headers%\graphics\2D\manipulators"
 @cd "Манипуляторы"
 
