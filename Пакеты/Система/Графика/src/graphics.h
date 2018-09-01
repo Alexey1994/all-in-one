@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_H_INCLUDED
-#define GRAPHICS_H_INCLUDED
+#ifndef SYSTEM_GRAPHICS_H_INCLUDED
+#define SYSTEM_GRAPHICS_H_INCLUDED
 
 
 typedef struct
@@ -17,4 +17,4 @@ import procedure draw_graphics         (Graphics *graphics);
 import procedure deinitialize_graphics (Graphics *graphics);
 
 
-#endif // GRAPHICS_H_INCLUDED
+#endif // SYSTEM_GRAPHICS_H_INCLUDED

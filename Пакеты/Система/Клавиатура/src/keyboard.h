@@ -1,5 +1,5 @@
-#ifndef KEYBOARD_H_INCLUDED
-#define KEYBOARD_H_INCLUDED
+#ifndef SYSTEM_KEYBOARD_H_INCLUDED
+#define SYSTEM_KEYBOARD_H_INCLUDED
 
 /*
 #define VK_LBUTTON	    1
@@ -89,4 +89,4 @@
 import function Boolean pressed_key (N_32 key_code);
 
 
-#endif //KEYBOARD_H_INCLUDED
+#endif //SYSTEM_KEYBOARD_H_INCLUDED

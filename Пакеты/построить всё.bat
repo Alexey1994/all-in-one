@@ -1,7 +1,7 @@
 @cls
-REM mkdir "c:\tcc\bin"
-REM @set bin="c:\tcc\bin"
-@set bin="c:\windows\system32"
+ mkdir "c:\tcc\bin"
+@set bin="c:\tcc\bin"
+REM @set bin="c:\windows\system32"
 @set def="c:\tcc\lib"
 @set headers="c:\tcc\include"
 
@@ -14,84 +14,112 @@ REM @set bin="c:\tcc\bin"
 @mkdir "%headers%\system\"
 
 @cd "Память\src"
-@tcc -shared memory.c -o memory.dll
-@copy memory.dll "%bin%\"
-@del memory.dll
-@copy memory.def "%def%\"
-@del memory.def
+@tcc -shared memory.c -o system_memory.dll
+@copy system_memory.dll "%bin%\"
+@del system_memory.dll
+@copy system_memory.def "%def%\"
+@del system_memory.def
 @copy memory.h "%headers%\system\"
 @cd ../../
 
 @cd "Потоки выполнения\src"
-@tcc -shared thread.c -o thread.dll
-@copy thread.dll "%bin%\"
-@del thread.dll
-@copy thread.def "%def%\"
-@del thread.def
+@tcc -shared thread.c -o system_thread.dll
+@copy system_thread.dll "%bin%\"
+@del system_thread.dll
+@copy system_thread.def "%def%\"
+@del system_thread.def
 @copy thread.h "%headers%\system\"
 @cd ../../
 
 @cd "Графика\src"
-@tcc -shared graphics.c -o graphics.dll "%def%\memory.def"
-@copy graphics.dll "%bin%\"
-@del graphics.dll
-@copy graphics.def "%def%\"
-@del graphics.def
+@tcc -shared graphics.c -o system_graphics.dll "%def%\system_memory.def"
+@copy system_graphics.dll "%bin%\"
+@del system_graphics.dll
+@copy system_graphics.def "%def%\"
+@del system_graphics.def
 @copy graphics.h "%headers%\system\"
 @cd ../../
 
 @cd "Мышь\src"
-@tcc -shared mouse.c -o mouse.dll
-@copy mouse.dll "%bin%\"
-@del mouse.dll
-@copy mouse.def "%def%\"
-@del mouse.def
+@tcc -shared mouse.c -o system_mouse.dll
+@copy system_mouse.dll "%bin%\"
+@del system_mouse.dll
+@copy system_mouse.def "%def%\"
+@del system_mouse.def
 @copy mouse.h "%headers%\system\"
 @cd ../../
 
 @cd "Клавиатура\src"
-@tcc -shared keyboard.c -o keyboard.dll
-@copy keyboard.dll "%bin%\"
-@del keyboard.dll
-@copy keyboard.def "%def%\"
-@del keyboard.def
+@tcc -shared keyboard.c -o system_keyboard.dll
+@copy system_keyboard.dll "%bin%\"
+@del system_keyboard.dll
+@copy system_keyboard.def "%def%\"
+@del system_keyboard.def
 @copy keyboard.h "%headers%\system\"
 @cd ../../
 
 @cd ../
 
-@cd "Графика/2D"
+@cd "Память\src"
+@tcc -shared memory.c -o memory.dll
+@copy memory.dll "%bin%\"
+@del memory.dll
+@copy memory.def "%def%\"
+@del memory.def
+@copy memory.h "%headers%\"
+@cd ../../
 
+@cd "Структуры данных"
+@mkdir "%headers%\data-structures"
+
+@cd "Буфер\src"
+@tcc -shared buffer.c -o data-structures_buffer.dll "%def%\system_memory.def" "%def%\memory.def"
+@copy data-structures_buffer.dll "%bin%\"
+@del data-structures_buffer.dll
+@copy data-structures_buffer.def "%def%\"
+@del data-structures_buffer.def
+@copy buffer.h "%headers%\data-structures\"
+@cd ../../
+
+@cd ../
+
+@cd "Ввод\src"
+@tcc -shared input.c -o input.dll "%def%\data-structures_buffer.def"
+@copy input.dll "%bin%\"
+@del input.dll
+@copy input.def "%def%\"
+@del input.def
+@copy input.h "%headers%\"
+@cd ../../
+
+@cd "Графика/2D"
 @mkdir "%headers%\graphics\2D"
 
 @cd "Прямоугольник\src"
-@tcc -shared rectangle.c -o rectangle.dll "%def%\graphics.def"
-@copy rectangle.dll "%bin%\"
-@del rectangle.dll
-@copy rectangle.def "%def%\"
-@del rectangle.def
+@tcc -shared rectangle.c -o graphics_2D_rectangle.dll "%def%\system_graphics.def"
+@copy graphics_2D_rectangle.dll "%bin%\"
+@del graphics_2D_rectangle.dll
+@copy graphics_2D_rectangle.def "%def%\"
+@del graphics_2D_rectangle.def
 @copy rectangle.h "%headers%\graphics\2D\"
 @cd ../../
 
 @cd "Линия\src"
-@tcc -shared line.c -o line.dll "%def%\graphics.def"
-@copy line.dll "%bin%\"
-@del line.dll
-@copy line.def "%def%\"
-@del line.def
+@tcc -shared line.c -o graphics_2D_line.dll "%def%\system_graphics.def"
+@copy graphics_2D_line.dll "%bin%\"
+@del graphics_2D_line.dll
+@copy graphics_2D_line.def "%def%\"
+@del graphics_2D_line.def
 @copy line.h "%headers%\graphics\2D\"
 @cd ../../
 
-@mkdir "%headers%\graphics\2D\manipulators"
-@cd "Манипуляторы"
-
 @cd "События\src"
-@tcc -shared events.c -o events.dll "%def%\mouse.def" "%def%\keyboard.def"
-@copy events.dll "%bin%\"
-@del events.dll
-@copy events.def "%def%\"
-@del events.def
-@copy events.h "%headers%\graphics\2D\manipulators\"
+@tcc -shared events.c -o graphics_2D_events.dll "%def%\system_mouse.def" "%def%\system_keyboard.def"
+@copy graphics_2D_events.dll "%bin%\"
+@del graphics_2D_events.dll
+@copy graphics_2D_events.def "%def%\"
+@del graphics_2D_events.def
+@copy events.h "%headers%\graphics\2D\"
 @cd ../../
 
 @cd ../../
