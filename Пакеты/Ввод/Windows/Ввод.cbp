@@ -24,13 +24,14 @@
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
-				<Linker>
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="data-structures_buffer" />
+		</Linker>
 		<Unit filename="../src/input.c">
 			<Option compilerVar="CC" />
 		</Unit>
