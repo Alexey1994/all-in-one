@@ -33,7 +33,7 @@ export function Byte input_head (Input *input)
 {
     Byte head;
 
-    if(input_buffer_length(&input) == 0)
+    if(!input_buffer_length(input))
         read_byte(input);
 
     return input->buffer.data[ input->buffer_data_index ];
@@ -126,7 +126,7 @@ export procedure read_byte_array (Input *input, Byte *array, N_32 length)
 }
 
 
-function N_8 read_binary_N_8 (Input *input)
+export function N_8 read_binary_N_8 (Input *input)
 {
     N_8 number;
     read_byte_array(input, &number, 1);
@@ -134,7 +134,7 @@ function N_8 read_binary_N_8 (Input *input)
 }
 
 
-function N_16 read_binary_N_16 (Input *input)
+export function N_16 read_binary_N_16 (Input *input)
 {
     N_16 number;
     read_byte_array(input, &number, 2);
@@ -142,7 +142,7 @@ function N_16 read_binary_N_16 (Input *input)
 }
 
 
-function N_32 read_binary_N_32 (Input *input)
+export function N_32 read_binary_N_32 (Input *input)
 {
     N_32 number;
     read_byte_array(input, &number, 4);
@@ -150,7 +150,7 @@ function N_32 read_binary_N_32 (Input *input)
 }
 
 
-function N_32 read_N_32 (Input *input)
+export function N_32 read_N_32 (Input *input)
 {
     N_32 number;
 /*
@@ -166,7 +166,7 @@ function N_32 read_N_32 (Input *input)
 }
 
 
-procedure skip_input_spaces (Input *input)
+export procedure skip_input_spaces (Input *input)
 {
     /*
     while(!end_of_input(input) && is_space(input_head(input)))
@@ -195,16 +195,16 @@ function N_32 main()
     printf("%c", read_byte(&input));
   */
 
-    if(read_if_next(&input, "#"))
+    if(read_if_next(&input, "#aaa"))
         printf("Ok\n");
 
     //if(read_if_next(&input, "#ifndef"))
     //    printf("Ok\n");
 
-    printf("%c", read_byte(&input));
-    printf("%c", read_byte(&input));
-    printf("%c", read_byte(&input));
-    printf("%c", read_byte(&input));
+    printf("read %c\n", read_byte(&input));
+    printf("read %c\n", read_byte(&input));
+    printf("read %c\n", read_byte(&input));
+    printf("read %c\n", read_byte(&input));
 
 
     return 0;

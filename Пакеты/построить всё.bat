@@ -1,5 +1,5 @@
 @cls
- mkdir "c:\tcc\bin"
+mkdir "c:\tcc\bin"
 @set bin="c:\tcc\bin"
 REM @set bin="c:\windows\system32"
 @set def="c:\tcc\lib"
@@ -50,7 +50,7 @@ REM @set bin="c:\windows\system32"
 @cd ../../
 
 @cd "Клавиатура\src"
-@tcc -shared keyboard.c -o system_keyboard.dll
+@tcc -shared keyboard.c "%def%\user32.def" -o system_keyboard.dll
 @copy system_keyboard.dll "%bin%\"
 @del system_keyboard.dll
 @copy system_keyboard.def "%def%\"
