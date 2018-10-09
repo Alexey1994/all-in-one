@@ -21,10 +21,6 @@
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="tcc" />
-				<Compiler>
-				</Compiler>
-				<Linker>
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -32,8 +28,8 @@
 			<Add option="-g" />
 		</Compiler>
 		<Linker>
-			<Add library="mouse" />
-			<Add library="keyboard" />
+			<Add library="system_mouse" />
+			<Add library="system_keyboard" />
 		</Linker>
 		<Unit filename="../src/events.c">
 			<Option compilerVar="CC" />

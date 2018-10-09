@@ -27,7 +27,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
-			<Add library="graphics" />
+			<Add library="system_graphics" />
 		</Linker>
 		<Unit filename="../src/rectangle.c">
 			<Option compilerVar="CC" />

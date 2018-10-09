@@ -27,8 +27,8 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
-			<Add library="graphics" />
-			<Add library="mouse" />
+			<Add library="system_graphics" />
+			<Add library="system_mouse" />
 		</Linker>
 		<Unit filename="../src/line.c">
 			<Option compilerVar="CC" />
