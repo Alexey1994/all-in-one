@@ -22,6 +22,15 @@ REM @set bin="c:\windows\system32"
 @copy memory.h "%headers%\system\"
 @cd ../../
 
+@cd "Файл\src"
+@tcc -shared file.c -o system_file.dll "%def%\memory.def"
+@copy system_file.dll "%bin%\"
+@del system_file.dll
+@copy system_file.def "%def%\"
+@del system_file.def
+@copy file.h "%headers%\system\"
+@cd ../../
+
 @cd "Потоки выполнения\src"
 @tcc -shared thread.c -o system_thread.dll
 @copy system_thread.dll "%bin%\"

@@ -2,29 +2,11 @@
 #define SYSTEM_FILE_H_INCLUDED
 
 
-#ifdef __WIN32__
-# include "Windows/Windows.h"
-#endif
+import function  Boolean create_file    (Byte *path, N_64 size);
+import procedure         delete_file    (Byte *path);
+import function  N_64    read_from_file (Byte *path, N_64 position, Byte *data, N_32 data_length);
+import function  N_64    write_in_file  (Byte *path, N_64 position, Byte *data, N_32 data_length);
+import function  N_64    get_file_size  (Byte *path);
 
-#ifdef __linux__
-# include "Linux/Linux.h"
-#endif
-
-
-import function  Boolean initialize_file    (File *file, Byte *path);
-import procedure         deinitialize_file  (File *file);
-
-import function  Boolean read_from_file     (File *file, Byte *data, N_32 data_length);
-import function  Boolean write_in_file      (File *file, Byte *data, N_32 data_length);
-
-import function  N_64    get_file_size      (File *file);
-
-/*
-#include <input/input.h>
-
-
-export function  Boolean initialize_file_input  (Input *file_input, Character *path);
-export function  Boolean initialize_file_output (Output *file_output, Character *path);
-*/
 
 #endif // SYSTEM_FILE_H_INCLUDED

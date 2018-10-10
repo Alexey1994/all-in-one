@@ -9,8 +9,15 @@
 
 #define FILE_ATTRIBUTE_NORMAL 128
 
-
 typedef Byte* File;
+
+//https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-openfile
+typedef enum
+{
+    OPEN_FILE_READ = 0,
+    OPEN_FILE_WRITE = 1
+}
+Open_File_Mode;
 
 //https://docs.microsoft.com/ru-ru/windows/desktop/api/winbase/ns-winbase-_ofstruct
 typedef struct

@@ -1,3 +1,7 @@
+#include "Windows.h"
+#include <memory.h>
+
+
 import function File    OpenFile    (Byte *path, File_Data *file_data, N_32 flags);
 import function Boolean CloseHandle (File file);
 
@@ -10,6 +14,8 @@ import function File CreateFileA(
     N_32  flags5,
     File  file
 );
+
+import function Boolean DeleteFileA (Byte *path);
 
 import function Boolean ReadFile(
     File  file,
@@ -27,145 +33,150 @@ import function Boolean WriteFile(
     Byte *overlapped
 );
 
+//https://docs.microsoft.com/ru-ru/windows/desktop/api/fileapi/nf-fileapi-setfilepointer
+import function N_32 SetFilePointer(
+    File  file,
+    N_32  position,
+    N_32 *position_high,
+    N_32  method
+);
+
 import function Boolean GetFileInformationByHandle(File file, File_Information *information);
 
 
-export function Boolean initialize_file (File *file, Byte *path)
+function Boolean file_exist (Byte *path)
 {
+    File      file;
     File_Data file_data;
 
-    //*file = OpenFile(path, &file_data, 0);
+    file = OpenFile(path, &file_data, OPEN_FILE_READ);
+    CloseHandle(file);
 
-    //if(file_data.error_code)
-    //    goto error;
-
-    *file = CreateFileA(path, GENERIC_WRITE | GENERIC_READ, 0, 0, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-
-    if(*file < 0)
-        goto error;
-
-    return 1;
-
-error:
-    return 0;
+    return !file_data.error_code;
 }
 
 
-export procedure deinitialize_file (File *file)
+export function Boolean create_file (Byte *path, N_64 size)
 {
-    CloseHandle(*file);
-}
-
-export function Boolean read_from_file (File *file, Byte *data, N_32 data_length)
-{
-    N_32 status;
-    N_32 bytes_readed;
-
-    status = ReadFile(*file, data, data_length, &bytes_readed, 0);
-
-    return 1;
-
-error:
-    return 0;
-}
-
-
-export function Boolean write_in_file (File *file, Byte *data, N_32 data_length)
-{
-    N_32 status;
+    File file;
+    Byte buffer[512];
+    Byte byte_buffer;
+    N_64 count;
+    N_32 remind;
+    N_32 i;
     N_32 bytes_writed;
 
-    status = WriteFile(*file, data, data_length, &bytes_writed, 0);
-
-    return 1;
-
-error:
-    return 0;
-}
-
-
-export function N_64 get_file_size (File *file)
-{
-    File_Information information;
-    
-    GetFileInformationByHandle(*file, &information);
-
-    return information.size_low;
-}
-
-/*
-private function Byte read_file_byte(File *file)
-{
-    Byte byte;
-    N_32 bytes_readed;
-
-    ReadFile(file->file_source, &byte, 1, &bytes_readed, 0);
-
-    if(!bytes_readed)
-        file->is_end_of_file = 1;
-
-    return byte;
-}
-
-
-private function Boolean end_of_file(File *file)
-{
-    return file->is_end_of_file;
-}
-
-
-private procedure destroy_file(File *file)
-{
-    CloseHandle(file->file_source);
-    free(file);
-}
-
-
-function Boolean initialize_file_input (Input *file_input, Character *path)
-{
-    Windows_File  file;
-    File         *file_source;
-
-    file_source = new(File);
-    file_source->file_source = OpenFile(path, &file, 0);
-
-    if(file.error_code)
+    if(file_exist(path))
         goto error;
 
-    file_source->is_end_of_file = 0;
-    initialize_input(file_input, file_source, &read_file_byte, &end_of_file);
-    file_input->destroy_source = &destroy_file;
+    file = CreateFileA(path, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+    count = size / 512;
+    remind = size % 512;
+
+    clear_memory(buffer, 512);
+
+    for(i = 0; i < count; ++i)
+    {
+        WriteFile(file, buffer, 512, &bytes_writed, 0);
+
+        if(bytes_writed != 512)
+            goto error2;
+    }
+
+    byte_buffer = 0;
+
+    for(i = 0; i < remind; ++i)
+    {
+        WriteFile(file, &byte_buffer, 1, &bytes_writed, 0);
+
+        if(bytes_writed != 1)
+            goto error2;
+    }
+
+    CloseHandle(file);
 
     return 1;
 
 error:
-    free(file_source);
+    return 0;
+error2:
+    CloseHandle(file);
+    delete_file(path);
     return 0;
 }
 
 
-private procedure write_byte_in_file (Windows_File *file, Byte byte)
+export procedure delete_file (Byte *path)
 {
-    N_32 bytes_writed;
-
-    WriteFile(file, &byte, 1, &bytes_writed, 0);
+    DeleteFileA(path);
 }
 
 
-function Boolean initialize_file_output (Output *file_output, Character *path)
+export function N_64 read_from_file (Byte *path, N_64 position, Byte *data, N_32 data_length)
 {
-    Windows_File *file_source;
+    File      file;
+    File_Data file_data;
+    N_32      bytes_readed;
 
-    file_source = CreateFileA(path, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+    file = OpenFile(path, &file_data, OPEN_FILE_READ);
 
-    if(file_source < 0)
+    if(file_data.error_code)
         goto error;
 
-    initialize_output(file_output, file_source, &write_byte_in_file);
-    file_output->deinitialize_source = &CloseHandle;
+    if(position)
+        SetFilePointer(file, position, 0, 0);
 
-    return 1;
+    ReadFile(file, data, data_length, &bytes_readed, 0);
+    CloseHandle(file);
+
+    return bytes_readed;
 
 error:
     return 0;
-}*/
+}
+
+
+export function N_64 write_in_file  (Byte *path, N_64 position, Byte *data, N_32 data_length)
+{
+    File      file;
+    File_Data file_data;
+    N_32      bytes_writed;
+
+    file = OpenFile(path, &file_data, OPEN_FILE_WRITE);
+
+    if(file_data.error_code)
+        goto error;
+
+    if(position)
+        SetFilePointer(file, position, 0, 0);
+
+    WriteFile(file, data, data_length, &bytes_writed, 0);
+    CloseHandle(file);
+
+    return bytes_writed;
+
+error:
+    return 0;
+}
+
+
+export function N_64 get_file_size  (Byte *path)
+{
+    File             file;
+    File_Data        file_data;
+    File_Information file_information;
+
+    file = OpenFile(path, &file_data, OPEN_FILE_READ);
+
+    if(file_data.error_code)
+        goto error;
+
+    GetFileInformationByHandle(file, &file_information);
+    CloseHandle(file);
+
+    return file_information.size_low;
+
+error:
+    return 0;
+}

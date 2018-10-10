@@ -14,24 +14,19 @@
 N_32 main()
 {
     File file;
-    Byte data[256];
+    Byte data[256] = {};
+    N_32 bytes;
 
-    initialize_file(&file, "a.txt");
-        //read_from_file(&file, data, 256);
-        //write_in_file(&file, "Hi", 2);
-        printf("%d\n", get_file_size(&file));
-    deinitialize_file(&file);
+    if(!create_file("a.txt", 513))
+        printf("File exist\n");
 
-    /*
-    Input file_input;
+    bytes = write_in_file("a.txt", 1, "Hi", 2);
+    printf("%d bytes, %s\n", bytes, data);
 
-    initialize_file_input(&file_input, "a.txt");
-    //if(!initialize_file_input(&file_input, "\\\\.\\ROOT\\NET\\0001"))
-    //    printf("error");
+    printf("%d\n", get_file_size("a.txt"));
 
-    printf("%d", GetLastError());
-    //printf("%c\n", read_byte(&file_input));
-    //deinitialize_input(&file_input);
-*/
+    bytes = read_from_file("a.txt", 1, data, 2);
+    printf("%d bytes, %s\n", bytes, data);
+
     return 0;
 }

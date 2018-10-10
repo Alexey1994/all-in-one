@@ -30,6 +30,32 @@ export procedure copy_memory (Byte *data1, Byte *data2, N_32 length)
 }
 
 
+export procedure clear_memory (Byte *data, N_32 length)
+{
+    N_32 system_length;
+    N_32 remind;
+
+    system_length = length / 4;
+    remind = length % 4;
+
+    while(system_length)
+    {
+        *((N_32*)data) = 0;
+
+        --system_length;
+        data += 4;
+    }
+
+    while(remind)
+    {
+        *data = 0;
+
+        --remind;
+        ++data;
+    }
+}
+
+
 function N_32 main()
 {
     Byte *source;
