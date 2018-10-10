@@ -96,7 +96,7 @@ Body
     postfix else (): Else
     end
 
-    postfix end (): Body
+    postfix end (if: If): Body
     end
 
     token break ()
@@ -105,3 +105,9 @@ Body
     token continue ()
     end
 end
+
+##########################################################################
+
+Number     = [0-9]*
+Expression = Number + Number | Number + Expression | Expression + Number |
+             Number - Number | Number - Expression | Expression - Number
