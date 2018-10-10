@@ -7,7 +7,7 @@
 #endif
 
 #ifdef __linux__
-# include "Linux/Linux.h"
+# include "Linux/Linux.c"
 #endif
 
 
