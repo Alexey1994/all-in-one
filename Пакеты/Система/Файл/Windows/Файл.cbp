@@ -23,6 +23,9 @@
 				<Option compiler="tcc" />
 			</Target>
 		</Build>
+		<Linker>
+			<Add library="memory" />
+		</Linker>
 		<Unit filename="../src/file.c">
 			<Option compilerVar="CC" />
 		</Unit>
