@@ -21,8 +21,6 @@
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="tcc" />
-				<Compiler>
-				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
@@ -30,8 +28,9 @@
 		</Compiler>
 		<Linker>
 			<Add library="user32" />
+			<Add library="memory" />
 		</Linker>
-		<Unit filename="../src/graphics.c">
+		<Unit filename="../src/display.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
