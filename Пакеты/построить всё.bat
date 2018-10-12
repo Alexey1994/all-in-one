@@ -40,6 +40,15 @@ REM @set bin="c:\windows\system32"
 @copy thread.h "%headers%\system\"
 @cd ../../
 
+@cd "Дисплей\src"
+@tcc -shared display.c -o system_display.dll "%def%\user32.def" "%def%\memory.def"
+@copy system_display.dll "%bin%\"
+@del system_display.dll
+@copy system_display.def "%def%\"
+@del system_display.def
+@copy display.h "%headers%\system\"
+@cd ../../
+
 @cd "Графика\src"
 @tcc -shared graphics.c -o system_graphics.dll "%def%\system_memory.def"
 @copy system_graphics.dll "%bin%\"
