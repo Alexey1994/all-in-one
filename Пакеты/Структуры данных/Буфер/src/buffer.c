@@ -70,15 +70,13 @@ export procedure clear_buffer (Buffer *buffer)
 
 function N_32 main()
 {
-    Buffer buffer;
+    BUFFER(1)
+        write_in_buffer(&buffer, 'H');
+        write_in_buffer(&buffer, 'i');
+        write_in_buffer(&buffer, '!');
 
-    initialize_buffer(&buffer, 1);
-
-    write_in_buffer(&buffer, 'H');
-    write_in_buffer(&buffer, 'i');
-    write_in_buffer(&buffer, '!');
-
-    printf("%s\n", buffer.data);
+        printf("%s\n", buffer.data);
+    END_BUFFER
 
     return 0;
 }

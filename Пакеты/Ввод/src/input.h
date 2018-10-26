@@ -38,5 +38,14 @@ import function  R_32      read_R_32                   (Input *input);
 import procedure           skip_input_spaces           (Input *input);
 import procedure           skip_input_text_empty_lines (Input *input);
 
+#define INPUT(source, read_byte)\
+{\
+    Input input;\
+    initialize_input(&input, (source), (read_byte));
+
+#define END_INPUT\
+    deinitialize_input(&input);\
+}
+
 
 #endif // INPUT_H_INCLUDED

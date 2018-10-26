@@ -186,28 +186,27 @@ char feof(Byte *file);
 
 function N_32 main()
 {
-    Input input;
-
     Byte *file;
 
     file = fopen("a.txt", "rb");
 
-    initialize_input(&input, file, &fgetc);
-    input.end_of_data = &feof;
+    INPUT(file, &fgetc)
+        input.end_of_data = &feof;
 
-    if(read_if(&input, "#if"))
-        printf("Ok\n");
+        if(read_if(&input, "#if"))
+            printf("Ok\n");
 
-    if(!read_if(&input, "def"))
-        printf("Ok\n");
+        if(!read_if(&input, "def"))
+            printf("Ok\n");
 
-    if(read_if(&input, "ndef"))
-        printf("Ok\n");
+        if(read_if(&input, "ndef"))
+            printf("Ok\n");
 
-    printf("read %d '%c'\n", input_data(&input), input_data(&input));
+        printf("read %d '%c'\n", input_data(&input), input_data(&input));
 
-    read_input(&input);
-    printf("read %d '%c'\n", input_data(&input), input_data(&input));
+        read_input(&input);
+        printf("read %d '%c'\n", input_data(&input), input_data(&input));
+    END_INPUT
 
     return 0;
 }

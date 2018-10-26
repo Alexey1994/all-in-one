@@ -20,4 +20,14 @@ import procedure         add_buffer_to_buffer     (Buffer *left, Buffer *right);
 import procedure         clear_buffer             (Buffer *buffer);
 
 
+#define BUFFER(reserve)\
+{\
+    Buffer buffer;\
+    initialize_buffer(&buffer, (reserve));
+
+#define END_BUFFER\
+    deinitialize_buffer(&buffer);\
+}
+
+
 #endif // BUFFER_H_INCLUDED
