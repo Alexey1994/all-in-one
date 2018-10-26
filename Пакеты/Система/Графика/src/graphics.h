@@ -22,6 +22,9 @@ import procedure deinitialize_graphics (Graphics *graphics);
     Graphics graphics;\
     initialize_graphics(&graphics, (width), (height));
 
+#define DRAW\
+    draw_graphics(&graphics);
+
 #define END_GRAPHICS\
     deinitialize_graphics(&graphics);\
 }

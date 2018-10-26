@@ -70,7 +70,7 @@ N_32 main()
             clear(&graphics);
             draw_rectangle(&rect, &graphics);
 
-            draw_graphics(&graphics);
+            DRAW
 
             //if(!(x %= 30))
                 //printf("frame");

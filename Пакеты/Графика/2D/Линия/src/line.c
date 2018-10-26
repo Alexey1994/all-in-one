@@ -78,22 +78,15 @@ procedure clear (Graphics *graphics)
 
 function N_32 main()
 {
-    Graphics graphics;
-    Line line;
+    GRAPHICS(1440, 900)
+        loop
+            LINE(10, 10, get_mouse_coord_x(), get_mouse_coord_y())
+                DRAW_LINE(255)
+            END_LINE
 
-    initialize_graphics(&graphics, 1440, 900);
-
-    initialize_line(&line, 10, 10, 1000, 500);
-    draw_line(&graphics, &line, 255);
-
-    for(;;)
-    {
-        //clear(&graphics);
-        //initialize_line(&line, 10, 10, get_mouse_coord_x(), get_mouse_coord_y());
-        //draw_line(&graphics, &line, 255);
-
-        draw_graphics(&graphics);
-    }
+            DRAW
+        end
+    END_GRAPHICS
 
     return 0;
 }
