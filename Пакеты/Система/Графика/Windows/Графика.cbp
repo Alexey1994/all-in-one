@@ -32,7 +32,7 @@
 		<Linker>
 			<Add library="user32" />
 			<Add library="gdi32" />
-			<Add library="memory" />
+			<Add library="system_memory" />
 		</Linker>
 		<Unit filename="../src/graphics.c">
 			<Option compilerVar="CC" />

@@ -41,24 +41,22 @@ export procedure write_in_buffer (Buffer *buffer, Byte byte)
 
 export procedure copy_buffer (Buffer *copy, Buffer *original)
 {
-    N_32 i;
-
     if(copy == original)
         return;
 
     initialize_buffer(copy, original->length);
 
-    for(i = 0; i < original->length; ++i)
+    cycle(0, original->length, 1)
         write_in_buffer(copy, original->data[i]);
+    end
 }
 
 
 export procedure add_buffer_to_buffer (Buffer *left, Buffer *right)
 {
-    N_32 i;
-
-    for(i = 0; i < right->length; ++i)
+    cycle(0, right->length, 1)
         write_in_buffer(left, right->data[i]);
+    end
 }
 
 

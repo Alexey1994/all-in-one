@@ -17,4 +17,14 @@ import procedure draw_graphics         (Graphics *graphics);
 import procedure deinitialize_graphics (Graphics *graphics);
 
 
+#define GRAPHICS(width, height)\
+{\
+    Graphics graphics;\
+    initialize_graphics(&graphics, (width), (height));
+
+#define END_GRAPHICS\
+    deinitialize_graphics(&graphics);\
+}
+
+
 #endif // SYSTEM_GRAPHICS_H_INCLUDED

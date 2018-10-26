@@ -27,12 +27,22 @@ typedef float                  R_32;
 typedef double                 R_64;
 
 
-#define loop       for(;;)
 #define private    static
 #define procedure  void
 #define function
 #define in
 #define out
+
+#define end }
+
+#define loop\
+    for(;;)\
+        {
+
+#define cycle(from, to, step)\
+    N_32 i;\
+    for(i = (from); i < (to); i += (step))\
+        {
 
 
 #endif // SYSTEM_H_INCLUDED

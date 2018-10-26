@@ -51,35 +51,31 @@ procedure draw_rectangle(Rectangle *rectangle, Graphics *graphics)
 
 N_32 main()
 {
-    //initialize_graphics(1440, 900, 120, &draw_scene);
-
-    Graphics graphics;
     N_32 x = 0;
     N_32 y = 0;
     Rectangle rect;
 
-    initialize_graphics(&graphics, 1440, 900);
+    GRAPHICS(1440, 900)
+        loop
+            rect.x = 10 + x;//get_mouse_coord_x();
+            rect.y = 10;//get_mouse_coord_y();
+            rect.width = 800;
+            rect.height = 800;
 
-    for(;;)
-    {
-        rect.x = 10 + x;//get_mouse_coord_x();
-        rect.y = 10;//get_mouse_coord_y();
-        rect.width = 800;
-        rect.height = 800;
+            //++x;
+            x+=10;
 
-        //++x;
-        x+=10;
+            //clear_canvas(canvas);
+            //set_canvas_color(canvas, 255, 0, 0, 255);
+            clear(&graphics);
+            draw_rectangle(&rect, &graphics);
 
-        //clear_canvas(canvas);
-        //set_canvas_color(canvas, 255, 0, 0, 255);
-        clear(&graphics);
-        draw_rectangle(&rect, &graphics);
+            draw_graphics(&graphics);
 
-        draw_graphics(&graphics);
-
-        //if(!(x %= 30))
-            //printf("frame");
-    }
+            //if(!(x %= 30))
+                //printf("frame");
+        end
+    END_GRAPHICS
 
     return 0;
 }

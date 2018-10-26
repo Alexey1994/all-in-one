@@ -13,12 +13,9 @@
 
 N_32 main()
 {
-    Byte *memory_address;
-
-    memory_address = allocate_memory(32);
-    free_memory(memory_address);
-
-    //printf("Hi");
+    ALLOCATE_MEMORY(32)
+        printf(memory);
+    END_ALLOCATE_MEMORY
 
     return 0;
 }
