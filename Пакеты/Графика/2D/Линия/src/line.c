@@ -2,7 +2,7 @@
 #include "line.h"
 
 
-export procedure initialize_line (Line *line, N_32 x1, N_32 y1, N_32 x2, N_32 y2)
+export procedure initialize_line (Line *line, N_16 x1, N_16 y1, N_16 x2, N_16 y2)
 {
     line->x1 = x1;
     line->y1 = y1;
@@ -11,50 +11,220 @@ export procedure initialize_line (Line *line, N_32 x1, N_32 y1, N_32 x2, N_32 y2
 }
 
 
+function N_32 module_1D (Z_32 number)
+{
+    if(number < 0)
+        return -number;
+
+    return number;
+}
+
+
 export procedure draw_line (Graphics *graphics, Line *line, N_32 color)
 {
-    N_32 line_length;
-    N_32 tail_length;
-    N_32 number_of_tails;
-    N_32 delta_x;
-    N_32 delta_y;
-
-    N_32 i;
-    N_32 j;
-    N_32 x;
-    N_32 y;
+    N_32 length_x;
+    N_32 length_y;
+    N_16 x1;
+    N_16 x2;
+    N_16 y1;
+    N_16 y2;
 
     N_32 *screen;
 
     screen = graphics->data;
 
-    delta_x = line->x2 - line->x1;
-    delta_y = line->y2 - line->y1;
+    x1 = line->x1;
+    x2 = line->x2;
+    y1 = line->y1;
+    y2 = line->y2;
 
-    if(delta_y < delta_x)
+    length_x = module_1D(x2 - x1) + 1;
+    length_y = module_1D(y2 - y1) + 1;
+
+    if(length_x >= length_y)
     {
-        line_length = delta_x;
-        number_of_tails = delta_y + 1;
-        tail_length = line_length / number_of_tails;
-
-        x = line->x1;
-        y = line->y1;
-
-        for(i = 0; i < number_of_tails; ++i)
+        if(y1 < y2)
         {
-            for(j = 0; j < tail_length; ++j)
+            if(x1 < x2)
             {
-                screen[(graphics->height - y) * graphics->width + x] = color;
-                ++x;
+                N_32 x_tail_length;
+                N_32 current_x;
+                N_32 max_x;
+
+                x_tail_length = x1 * length_y;
+                current_x = x_tail_length;
+                max_x = x2 * length_y;
+
+                for(; y1 <= y2; ++y1)
+                {
+                    x_tail_length += length_x;
+
+                    if(x_tail_length > max_x)
+                        x_tail_length = max_x + length_y;
+
+                    for(; current_x < x_tail_length; current_x += length_y, ++x1)
+                        screen[(graphics->height - y1) * graphics->width + x1] = color;
+                }
             }
+            else
+            {
+                N_32 x_tail_length;
+                N_32 current_x;
+                N_32 max_x;
 
-            ++y;
+                x_tail_length = x2 * length_y;
+                current_x = x_tail_length;
+                max_x = x1 * length_y;
+
+                for(; y2 >= y1; --y2)
+                {
+                    x_tail_length += length_x;
+
+                    if(x_tail_length > max_x)
+                        x_tail_length = max_x + length_y;
+
+                    for(; current_x < x_tail_length; current_x += length_y, ++x2)
+                        screen[(graphics->height - y2) * graphics->width + x2] = color;
+                }
+            }
         }
-
-        while(x < line->x2)
+        else
         {
-            screen[(graphics->height - y) * graphics->width + x] = color;
-            ++x;
+            if(x1 < x2)
+            {
+                N_32 x_tail_length;
+                N_32 current_x;
+                N_32 max_x;
+
+                x_tail_length = x1 * length_y;
+                current_x = x_tail_length;
+                max_x = x2 * length_y;
+
+                for(; y1 >= y2; --y1)
+                {
+                    x_tail_length += length_x;
+
+                    if(x_tail_length > max_x)
+                        x_tail_length = max_x + length_y;
+
+                    for(; current_x < x_tail_length; current_x += length_y, ++x1)
+                        screen[(graphics->height - y1) * graphics->width + x1] = color;
+                }
+            }
+            else
+            {
+                N_32 x_tail_length;
+                N_32 current_x;
+                N_32 max_x;
+
+                x_tail_length = x2 * length_y;
+                current_x = x_tail_length;
+                max_x = x1 * length_y;
+
+                for(; y2 <= y1; ++y2)
+                {
+                    x_tail_length += length_x;
+
+                    if(x_tail_length > max_x)
+                        x_tail_length = max_x + length_y;
+
+                    for(; current_x < x_tail_length; current_x += length_y, ++x2)
+                        screen[(graphics->height - y2) * graphics->width + x2] = color;
+                }
+            }
+        }
+    }
+    else
+    {
+        if(x1 < x2)
+        {
+            if(y1 < y2)
+            {
+                N_32 y_tail_length;
+                N_32 current_y;
+                N_32 max_y;
+
+                y_tail_length = y1 * length_x;
+                current_y = y_tail_length;
+                max_y = y2 * length_x;
+
+                for(; x1 <= x2; ++x1)
+                {
+                    y_tail_length += length_y;
+
+                    if(y_tail_length > max_y)
+                        y_tail_length = max_y + length_x;
+
+                    for(; current_y < y_tail_length; current_y += length_x, ++y1)
+                        screen[(graphics->height - y1) * graphics->width + x1] = color;
+                }
+            }
+            else
+            {
+                N_32 y_tail_length;
+                N_32 current_y;
+                N_32 max_y;
+
+                y_tail_length = y2 * length_x;
+                current_y = y_tail_length;
+                max_y = y1 * length_x;
+
+                for(; x2 >= x1; --x2)
+                {
+                    y_tail_length += length_y;
+
+                    if(y_tail_length > max_y)
+                        y_tail_length = max_y + length_x;
+
+                    for(; current_y < y_tail_length; current_y += length_x, ++y2)
+                        screen[(graphics->height - y2) * graphics->width + x2] = color;
+                }
+            }
+        }
+        else
+        {
+            if(y1 < y2)
+            {
+                N_32 y_tail_length;
+                N_32 current_y;
+                N_32 max_y;
+
+                y_tail_length = y1 * length_x;
+                current_y = y_tail_length;
+                max_y = y2 * length_x;
+
+                for(; x1 >= x2; --x1)
+                {
+                    y_tail_length += length_y;
+
+                    if(y_tail_length > max_y)
+                        y_tail_length = max_y + length_x;
+
+                    for(; current_y < y_tail_length; current_y += length_x, ++y1)
+                        screen[(graphics->height - y1) * graphics->width + x1] = color;
+                }
+            }
+            else
+            {
+                N_32 y_tail_length;
+                N_32 current_y;
+                N_32 max_y;
+
+                y_tail_length = y2 * length_x;
+                current_y = y_tail_length;
+                max_y = y1 * length_x;
+
+                for(; x2 <= x1; ++x2)
+                {
+                    y_tail_length += length_y;
+
+                    if(y_tail_length > max_y)
+                        y_tail_length = max_y + length_x;
+
+                    for(; current_y < y_tail_length; current_y += length_x, ++y2)
+                        screen[(graphics->height - y2) * graphics->width + x2] = color;
+                }
+            }
         }
     }
 }
@@ -80,10 +250,12 @@ function N_32 main()
 {
     GRAPHICS(1440, 900)
         loop
-            LINE(10, 10, get_mouse_coord_x(), get_mouse_coord_y())
-                DRAW_LINE(255)
+            clear(&graphics);
+/*
+            LINE(500, 500, get_mouse_coord_x(), get_mouse_coord_y())
+                DRAW_LINE(255 * 256)
             END_LINE
-
+*/
             DRAW
         end
     END_GRAPHICS
