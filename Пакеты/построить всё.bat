@@ -76,6 +76,21 @@ REM @set bin="c:\windows\system32"
 @copy keyboard.h "%headers%\system\"
 @cd ../../
 
+@cd "Сеть"
+@mkdir "%headers%\system\network\"
+
+@cd "Адрес\src"
+@tcc -shared address.c "%def%\winsock32.def" -o system_network_address.dll
+@copy system_network_address.dll "%bin%\"
+@del system_network_address.dll
+@copy system_network_address.def "%def%\"
+@del system_network_address.def
+@copy address.h "%headers%\system\network\"
+@cd ../../
+
+@cd ../
+@REM "Сеть"
+
 @cd ../
 
 @cd "Память\src"
