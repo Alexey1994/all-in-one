@@ -73,6 +73,7 @@ export function Boolean initialize_UDP_Server (UDP_Server *server, Address *serv
     run_thread(&listen_UDP_Server_requests, server);
 for(;;)
 {
+    sleep_thread(1);
     draw_graphics(attributes);
 }
     return 1;

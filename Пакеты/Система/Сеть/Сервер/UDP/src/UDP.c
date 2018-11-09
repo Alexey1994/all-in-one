@@ -23,17 +23,35 @@ internal procedure initialize_UDP_Connection_from_UDP_Server (UDP_Connection *co
     connection->destination = destination;
 }*/
 
+N_32 y = 0;
+N_32 x = 0;
 
-function Boolean on_request (Address *client_address, Byte *data, N_32 data_length, Graphics *graphics)
+function Boolean on_request (Address *client_address, N_32 *data, N_32 data_length, Graphics *graphics)
 {
     //printf("request %d bytes\n %s \n", data_length, data);
 
+    //printf("%d\n", count);
+
+    N_32 *display = graphics->data;
+    data_length /= 4;
+
     cycle(0, data_length, 1)
-        graphics->data[i] = data[i];
+        if(x == 200)
+        {
+            x = 0;
+            ++y;
+
+            if(y == 200)
+                y = 0;
+        }
+
+        display[y * graphics->width + x] = data[i];
+
+        ++x;
     end
 
     //draw_graphics(graphics);
-    printf("frame\n");
+    //printf("%d frame\n", y * 100 + x);
 
     return 0;
 }
