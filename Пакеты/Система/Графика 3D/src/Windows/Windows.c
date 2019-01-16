@@ -1,9 +1,5 @@
 N_32 update_window_state(Byte *window, N_32 message, N_32 *parameters_1, Z_32 *parameters_2)
 {
-    Graphics         *graphics;
-    Windows_Graphics *system_graphics;
-    Windows_Paint     paint;
-
     if(message == CLOSE_WINDOW_MESSAGE)
     {
         PostQuitMessage(0);
@@ -12,39 +8,39 @@ N_32 update_window_state(Byte *window, N_32 message, N_32 *parameters_1, Z_32 *p
 
     if(message == DESTROY_WINDOW_MESSAGE)
         return 0;
-
+/*
     if(message == PAINT_WINDOW_MESSAGE)
     {
-        graphics = GetWindowLongA(window, USER_DATA);
-        system_graphics = graphics->system_graphics;
-
-        BeginPaint(window, &paint);
-            SetDIBitsToDevice(
-                system_graphics->context,
-                0,
-                0,
-                graphics->width,
-                graphics->height,
-                0,
-                0,
-                0,
-                graphics->height,
-                graphics->data,
-                &system_graphics->bitmap_info,
-                0
-            );
-        EndPaint(window, &paint);
         return 0;
     }
-
+*/
     return DefWindowProcA(window, message, parameters_1, parameters_2);
+}
+
+
+void EnableOpenGL(Byte *window, Byte *hDC, Byte* hRC)
+{
+    Windows_Pixel_Format_Descriptor pfd;
+
+    int iFormat;
+
+    *hDC = GetDC(window);
+
+    iFormat = ChoosePixelFormat(*hDC, &pfd);
+
+    SetPixelFormat(*hDC, iFormat, &pfd);
+
+    *hRC = wglCreateContext(*hDC);
+    wglMakeCurrent(*hDC, *hRC);
 }
 
 
 export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 height)
 {
-    Windows_Graphics *system_graphics;
-    N_32              status;
+    Windows_Graphics*               system_graphics;
+    N_32                            status;
+    Windows_Pixel_Format_Descriptor pixel_format_descriptor;
+    N_32                            pixel_format;
 
     system_graphics = allocate_memory(sizeof(Windows_Graphics));
 
@@ -99,19 +95,48 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
     ShowWindow(system_graphics->window, SHOW_MAXIMIZED_WINDOW);
     system_graphics->context = GetDC(system_graphics->window);
 
-    system_graphics->bitmap_info.header.size_of_structure                 = sizeof(Bitmap_Info_Header);
-    system_graphics->bitmap_info.header.width                             = width;
-    system_graphics->bitmap_info.header.height                            = height;
-    system_graphics->bitmap_info.header.planes                            = 1;
-    system_graphics->bitmap_info.header.bit_count                         = 32;
-    system_graphics->bitmap_info.header.compression                       = 0;
-    system_graphics->bitmap_info.header.size_image                        = 0;
-    system_graphics->bitmap_info.header.x_pels_per_meter                  = 0;
-    system_graphics->bitmap_info.header.y_pels_per_meter                  = 0;
-    system_graphics->bitmap_info.header.number_of_color_indexes           = 0;
-    system_graphics->bitmap_info.header.number_of_color_indexes_important = 0;
+    pixel_format_descriptor.size = sizeof(Windows_Pixel_Format_Descriptor);
+    pixel_format_descriptor.nVersion = 0;
+    pixel_format_descriptor.dwFlags = 0;
+    pixel_format_descriptor.iPixelType = 0;
+    pixel_format_descriptor.cColorBits = 0;
+    pixel_format_descriptor.cRedBits = 0;
+    pixel_format_descriptor.cRedShift = 0;
+    pixel_format_descriptor.cGreenBits = 0;
+    pixel_format_descriptor.cGreenShift = 0;
+    pixel_format_descriptor.cBlueBits = 0;
+    pixel_format_descriptor.cBlueShift = 0;
+    pixel_format_descriptor.cAlphaBits = 0;
+    pixel_format_descriptor.cAlphaShift = 0;
+    pixel_format_descriptor.cAccumBits = 0;
+    pixel_format_descriptor.cAccumRedBits = 0;
+    pixel_format_descriptor.cAccumGreenBits = 0;
+    pixel_format_descriptor.cAccumBlueBits = 0;
+    pixel_format_descriptor.cAccumAlphaBits = 0;
+    pixel_format_descriptor.cDepthBits = 0;
+    pixel_format_descriptor.cStencilBits = 0;
+    pixel_format_descriptor.cAuxBuffers = 0;
+    pixel_format_descriptor.iLayerType = 0;
+    pixel_format_descriptor.bReserved = 0;
+    pixel_format_descriptor.dwLayerMask = 0;
+    pixel_format_descriptor.dwVisibleMask = 0;
+    pixel_format_descriptor.dwDamageMask = 0;
 
-    system_graphics->bitmap_info.color[0]                                 = 0;
+    pixel_format = ChoosePixelFormat(system_graphics->context, &pixel_format_descriptor);
+    SetPixelFormat(system_graphics->context, pixel_format, &pixel_format_descriptor);
+
+    system_graphics->graphics_context = wglCreateContext(system_graphics->context);
+
+    if(!system_graphics->graphics_context)
+    {
+        printf("error in wglCreateContext %d", GetLastError());
+        goto error;
+    }
+
+    wglMakeCurrent(system_graphics->context, system_graphics->graphics_context);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     return;
 
@@ -140,9 +165,11 @@ export procedure draw_graphics (Graphics *graphics)
     }
     else
     {
-        InvalidateRect(system_graphics->window, 0, 1);
-        RedrawWindow(system_graphics->window, 0, 0, UPDATE_NOW);
-        UpdateWindow(system_graphics->window);
+        //InvalidateRect(system_graphics->window, 0, 1);
+        //RedrawWindow(system_graphics->window, 0, 0, UPDATE_NOW);
+        //UpdateWindow(system_graphics->window);
+
+        wglSwapBuffers(system_graphics->context);
     }
 }
 

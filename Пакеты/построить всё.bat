@@ -88,6 +88,21 @@ REM @set bin="c:\windows\system32"
 @copy address.h "%headers%\system\network\"
 @cd ../../
 
+@cd "Клиент"
+@mkdir "%headers%\system\network\client"
+
+@cd "TCP\src"
+@tcc -shared TCP.c "%def%\winsock32.def" -o system_network_client_TCP.dll "%def%\winsock32.def" "%def%\system_network_address.def"
+@copy system_network_client_TCP.dll "%bin%\"
+@del system_network_client_TCP.dll
+@copy system_network_client_TCP.def "%def%\"
+@del system_network_client_TCP.def
+@copy TCP.h "%headers%\system\network\client"
+@cd ../../
+
+@cd ../
+@REM "Клиент"
+
 @cd ../
 @REM "Сеть"
 
@@ -101,6 +116,27 @@ REM @set bin="c:\windows\system32"
 @del memory.def
 @copy memory.h "%headers%\"
 @cd ../../
+
+@cd "Сеть"
+@mkdir "%headers%\network\"
+
+@cd "Клиент"
+@mkdir "%headers%\network\client"
+
+@cd "TCP\src"
+@tcc -shared TCP.c "%def%\winsock32.def" -o network_client_TCP.dll "%def%\system_network_client_TCP.def" "%def%\system_network_address.def" "%def%\input.def" "%def%\output.def"
+@copy network_client_TCP.dll "%bin%\"
+@del network_client_TCP.dll
+@copy network_client_TCP.def "%def%\"
+@del network_client_TCP.def
+@copy TCP.h "%headers%\network\client"
+@cd ../../
+
+@cd ../
+@REM "Клиент"
+
+@cd ../
+@REM "Сеть"
 
 @cd "Структуры данных"
 @mkdir "%headers%\data-structures"
@@ -123,6 +159,15 @@ REM @set bin="c:\windows\system32"
 @copy input.def "%def%\"
 @del input.def
 @copy input.h "%headers%\"
+@cd ../../
+
+@cd "Вывод\src"
+@tcc -shared output.c -o output.dll
+@copy output.dll "%bin%\"
+@del output.dll
+@copy output.def "%def%\"
+@del output.def
+@copy output.h "%headers%\"
 @cd ../../
 
 @cd "Графика/2D"
