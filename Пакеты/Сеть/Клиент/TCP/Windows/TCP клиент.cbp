@@ -24,7 +24,9 @@
 			</Target>
 		</Build>
 		<Linker>
-			<Add library="winsock32" />
+			<Add library="system_network_client_TCP" />
+			<Add library="input" />
+			<Add library="output" />
 		</Linker>
 		<Unit filename="../src/TCP.c">
 			<Option compilerVar="CC" />

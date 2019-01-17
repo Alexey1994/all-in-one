@@ -77,8 +77,11 @@ N_32 main()
 */
     TCP_CLIENT_INPUT_OUTPUT(tcp, &address)
         write_null_terminated_byte_array(&tcp_output,
-            "GET / HTTP 1.1\r\n"
-            "Connection: close\r\n\r\n");
+            "GET / HTTP/1.1\r\n"
+            "Host: vk.com\r\n"
+            "Accept: text/html\r\n"
+            "Content-Length: 0\r\n"
+            "Connection: keep-alive\r\n\r\n");
 
         while(!end_of_input(&tcp_input))
         {
