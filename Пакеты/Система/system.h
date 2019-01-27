@@ -26,6 +26,24 @@ typedef unsigned long long int N_64;
 typedef float                  R_32;
 typedef double                 R_64;
 
+/////////////////////////////////////
+
+typedef unsigned char          Bit8;
+typedef unsigned short int     Bit16;
+typedef unsigned long int      Bit32;
+typedef unsigned long long int Bit64;
+
+typedef struct
+{
+    Bit32 byte_address;
+    Bit8  bit_address;
+}
+Address;
+
+//#define read_bit(address, out)\
+//    out = (*((Bit8*)address.)
+
+/////////////////////////////////////
 
 #define private    static
 #define procedure  void

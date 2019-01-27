@@ -155,28 +155,38 @@ export function N_32 read_binary_N_32 (Input *input)
 }
 
 
+Boolean is_number_character(char character)
+{
+    return character >= '0' && character <= '9';
+}
+
+
 export function N_32 read_N_32 (Input *input)
 {
     N_32 number;
-/*
+
     number = 0;
 
-    while(is_number(input_data(input)) && !end_of_input(input))
+    while(!end_of_input(input) && is_number_character(input_data(input)))
     {
         number = number*10 + input_data(input) - '0';
-        read_byte(input);
+        read_input(input);
     }
-*/
+
     return number;
 }
 
 
-export procedure skip_input_spaces (Input *input)
+Boolean is_space_character(char character)
 {
-    /*
-    while(!end_of_input(input) && is_space(input_data(input)))
-        read_byte(input);
-        */
+    return character == ' ' || character == '\r' || character == '\n' || character == '\t';
+}
+
+
+export procedure skip_spaces (Input* input)
+{
+    while(!end_of_input(input) && is_space_character(input_data(input)))
+        read_input(input);
 }
 
 

@@ -9,8 +9,13 @@ REM @set bin="c:\windows\system32"
 @echo [--------------------------------------------------]
 
 @cd "Система"
-@copy system.h "%headers%\"
 
+REM @copy system.h "%headers%\"
+
+@cd "Основа\src"
+@copy base.h "%headers%\"
+
+@cd "..\..\"
 @mkdir "%headers%\system\"
 
 @cd "Память\src"
@@ -159,6 +164,15 @@ REM @set bin="c:\windows\system32"
 @copy input.def "%def%\"
 @del input.def
 @copy input.h "%headers%\"
+@cd ../../
+
+@cd "Парсер выражений\src"
+@tcc -shared expression-parser.c -o expression-parser.dll "%def%\input.def" "%def%\data-structures_buffer.def"
+@copy expression-parser.dll "%bin%\"
+@del expression-parser.dll
+@copy expression-parser.def "%def%\"
+@del expression-parser.def
+@copy expression-parser.h "%headers%\"
 @cd ../../
 
 @cd "Вывод\src"

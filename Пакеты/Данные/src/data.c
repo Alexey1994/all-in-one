@@ -190,7 +190,7 @@ function N_32 main()
 
     PARSE_DATA("\"Hitt\"[\"Y\"]", 11);
         T *t = data;
-        printf(t->inner);
+        printf(t->inner->hi);
     END_PARSE_DATA
 
     return 0;
