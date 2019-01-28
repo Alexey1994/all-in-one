@@ -23,6 +23,10 @@
 				</Linker>
 			</Target>
 		</Build>
+		<Linker>
+			<Add library="data-structures_buffer" />
+			<Add library="input" />
+		</Linker>
 		<Unit filename="../src/expression-parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
