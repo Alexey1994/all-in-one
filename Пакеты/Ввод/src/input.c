@@ -177,6 +177,83 @@ export function N_32 read_N_32 (Input *input)
 }
 
 
+export N_32 read_UTF_8_character (Input* input)
+{
+    N_8  current_byte;
+    N_32 number_of_bytes;
+    N_32 result;
+
+    current_byte = input_data(input);
+    read_input(input);
+
+    if(!(current_byte & 0b10000000))
+        return current_byte;
+
+    if((current_byte & 0b11110000) == 0b11110000)
+    {
+        number_of_bytes = 4;
+        result = (current_byte & 0b00001111) << 18;
+/*
+        current_byte = input_data(input);
+        read_input(input);
+        result = (current_byte & 0b00111111) << 12;
+
+        current_byte = input_data(input);
+        read_input(input);
+        result = (current_byte & 0b00111111) << 6;
+
+        current_byte = input_data(input);
+        read_input(input);
+        result |= current_byte & 0b00111111;
+
+        return result;
+*/
+    }
+    else if((current_byte & 0b11100000) == 0b11100000)
+    {
+        number_of_bytes = 3;
+        result = (current_byte & 0b00011111) << 12;
+/*
+        current_byte = input_data(input);
+        read_input(input);
+        result = (current_byte & 0b00111111) << 6;
+
+        current_byte = input_data(input);
+        read_input(input);
+        result |= current_byte & 0b00111111;
+
+        return result;
+*/
+    }
+    else if((current_byte & 0b11000000) == 0b11000000)
+    {
+        number_of_bytes = 2;
+        result = (current_byte & 0b00111111) << 6;
+
+/*
+        current_byte = input_data(input);
+        read_input(input);
+        result |= current_byte & 0b00111111;
+
+        return result;
+*/
+    }
+    else
+        goto error;
+
+    cycle(0, number_of_bytes - 1, 1)
+        current_byte = input_data(input);
+        read_input(input);
+        result |= (current_byte & 0b00111111) << ((number_of_bytes - 2 - i) * 6);
+    end
+
+    return result;
+
+error:
+    return 1;
+}
+
+
 Boolean is_space_character(char character)
 {
     return character == ' ' || character == '\r' || character == '\n' || character == '\t';

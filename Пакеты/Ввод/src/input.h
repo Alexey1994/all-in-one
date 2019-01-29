@@ -34,6 +34,7 @@ import function  R_32      read_binary_R_32            (Input *input);
 import function  N_32      read_N_32                   (Input *input);
 import function  Z_32      read_Z_32                   (Input *input);
 import function  R_32      read_R_32                   (Input *input);
+import N_32 read_UTF_8_character (Input* input);
 
 import procedure           skip_spaces                 (Input *input);
 import procedure           skip_input_text_empty_lines (Input *input);
