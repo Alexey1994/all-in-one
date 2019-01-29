@@ -2,7 +2,7 @@
 #include "input.h"
 
 
-export procedure initialize_input (Input *input, Byte *source, function Byte (*read_byte)(Byte *source))
+export void initialize_input (Input* input, Byte* source, function Byte (*read_byte)(Byte* source))
 {
     input->source            = source;
     input->read_byte         = read_byte;
@@ -14,7 +14,7 @@ export procedure initialize_input (Input *input, Byte *source, function Byte (*r
 }
 
 
-export procedure deinitialize_input (Input *input)
+export void deinitialize_input (Input* input)
 {
     if(input->destroy_source)
         input->destroy_source(input->source);
@@ -23,13 +23,13 @@ export procedure deinitialize_input (Input *input)
 }
 
 
-function N_32 input_buffer_length(Input *input)
+N_32 input_buffer_length (Input* input)
 {
     return input->buffer.length - input->buffer_data_index;
 }
 
 
-export function Byte input_data (Input *input)
+export Byte input_data (Input* input)
 {
     Byte head;
 
@@ -40,7 +40,52 @@ export function Byte input_data (Input *input)
 }
 
 
-export procedure read_input (Input *input)
+export N_32 input_UTF_8_data (Input* input)
+{
+    N_8  current_byte;
+    N_32 number_of_bytes;
+    N_32 buffer_length;
+    N_32 head;
+
+    current_byte = input_data(input);
+
+    if(!(current_byte & 0b10000000))
+        return current_byte;
+
+    if((current_byte & 0b11110000) == 0b11110000)
+    {
+        number_of_bytes = 4;
+        head = (current_byte & 0b00001111) << 18;
+    }
+    else if((current_byte & 0b11100000) == 0b11100000)
+    {
+        number_of_bytes = 3;
+        head = (current_byte & 0b00011111) << 12;
+    }
+    else if((current_byte & 0b11000000) == 0b11000000)
+    {
+        number_of_bytes = 2;
+        head = (current_byte & 0b00111111) << 6;
+    }
+    else
+        goto error;
+
+    while(input_buffer_length(input) < number_of_bytes)
+        write_in_buffer(&input->buffer, input->read_byte(input->source));
+
+    cycle(0, number_of_bytes - 1, 1)
+        current_byte = input->buffer.data[ input->buffer_data_index + i ];
+        head |= (current_byte & 0b00111111) << ((number_of_bytes - 2 - i) * 6);
+    end
+
+    return head;
+
+error:
+    return 0;
+}
+
+
+export void read_input (Input* input)
 {
     Byte last_byte;
 
@@ -66,7 +111,7 @@ export procedure read_input (Input *input)
 }
 
 
-export function Boolean end_of_input (Input *input)
+export Boolean end_of_input (Input* input)
 {
     if(!input->end_of_data)
         return 0;
@@ -78,7 +123,7 @@ export function Boolean end_of_input (Input *input)
 }
 
 
-export function Boolean read_if (Input *input, Byte *next)
+export Boolean read_if (Input* input, Byte* next)
 {
     Buffer accumulator;
     Buffer buffer_copy;
@@ -109,7 +154,7 @@ export function Boolean read_if (Input *input, Byte *next)
 }
 
 
-export procedure read_byte_array (Input *input, Byte *array, N_32 length)
+export void read_byte_array (Input* input, Byte* array, N_32 length)
 {
     N_32 i;
 
@@ -131,7 +176,7 @@ export procedure read_byte_array (Input *input, Byte *array, N_32 length)
 }
 
 
-export function N_8 read_binary_N_8 (Input *input)
+export N_8 read_binary_N_8 (Input* input)
 {
     N_8 number;
     read_byte_array(input, &number, 1);
@@ -139,7 +184,7 @@ export function N_8 read_binary_N_8 (Input *input)
 }
 
 
-export function N_16 read_binary_N_16 (Input *input)
+export N_16 read_binary_N_16 (Input* input)
 {
     N_16 number;
     read_byte_array(input, &number, 2);
@@ -147,7 +192,7 @@ export function N_16 read_binary_N_16 (Input *input)
 }
 
 
-export function N_32 read_binary_N_32 (Input *input)
+export N_32 read_binary_N_32 (Input* input)
 {
     N_32 number;
     read_byte_array(input, &number, 4);
@@ -155,13 +200,13 @@ export function N_32 read_binary_N_32 (Input *input)
 }
 
 
-Boolean is_number_character(char character)
+Boolean is_number_character (char character)
 {
     return character >= '0' && character <= '9';
 }
 
 
-export function N_32 read_N_32 (Input *input)
+export N_32 read_N_32 (Input* input)
 {
     N_32 number;
 
@@ -254,26 +299,26 @@ error:
 }
 
 
-Boolean is_space_character(char character)
+Boolean is_space_character (char character)
 {
     return character == ' ' || character == '\r' || character == '\n' || character == '\t';
 }
 
 
-export procedure skip_spaces (Input* input)
+export void skip_spaces (Input* input)
 {
     while(!end_of_input(input) && is_space_character(input_data(input)))
         read_input(input);
 }
 
 
-char fgetc(Byte *file);
-char feof(Byte *file);
+char fgetc (Byte* file);
+char feof (Byte* file);
 
 
-function N_32 main()
+N_32 main()
 {
-    Byte *file;
+    Byte* file;
 
     file = fopen("a.txt", "rb");
 
