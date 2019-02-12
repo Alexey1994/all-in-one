@@ -66,12 +66,36 @@ export procedure clear_buffer (Buffer *buffer)
 }
 
 
+export void remove_from_buffer (Buffer* buffer, N_32 index, N_32 size_of_data, Byte* data)
+{
+    N_32  element_index;
+    Byte* element;
+
+    element_index = size_of_data * index;
+    element = buffer->data + element_index;
+
+    cycle(0, size_of_data, 1)
+        data[i] = element[i];
+    end
+
+    for(i = element_index; i < buffer->length - size_of_data; ++i)
+        data[i] = element[i + size_of_data];
+
+    buffer->length -= size_of_data;
+}
+
+
 function N_32 main()
 {
     BUFFER(1)
         write_in_buffer(&buffer, 'H');
         write_in_buffer(&buffer, 'i');
         write_in_buffer(&buffer, '!');
+
+        add_in_buffer(&buffer, "hi!", 4);
+
+        N_32 outt;
+        remove_from_buffer(&buffer, 0, 4, &outt);
 
         printf("%s\n", buffer.data);
     END_BUFFER

@@ -19,6 +19,8 @@ import procedure         copy_buffer              (Buffer *copy, Buffer *origina
 import procedure         add_buffer_to_buffer     (Buffer *left, Buffer *right);
 import procedure         clear_buffer             (Buffer *buffer);
 
+export void remove_from_buffer (Buffer* buffer, N_32 index, N_32 size_of_data, Byte* data);
+
 
 #define BUFFER(reserve)\
 {\
@@ -28,6 +30,15 @@ import procedure         clear_buffer             (Buffer *buffer);
 #define END_BUFFER\
     deinitialize_buffer(&buffer);\
 }
+
+#define add_in_buffer(buffer, data, length)\
+{\
+    N_32 _index;\
+    for(_index = 0; _index < (length); ++_index)\
+        write_in_buffer((buffer), ((Byte*)&(data))[_index]);\
+}
+
+#define BUFFER_LENGTH(buffer, size_of_data)
 
 
 #endif // BUFFER_H_INCLUDED
