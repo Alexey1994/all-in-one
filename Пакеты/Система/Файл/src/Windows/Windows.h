@@ -9,6 +9,8 @@
 
 #define FILE_ATTRIBUTE_NORMAL 128
 
+#define OPEN_READ_AND_WRITE   0x00000002
+
 typedef Bit8* File;
 
 //https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-openfile

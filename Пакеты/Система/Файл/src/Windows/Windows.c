@@ -56,14 +56,9 @@ Bit32 file_exist (Bit8* path)
 }
 
 
-export Boolean create_file (Bit8* path, Bit64 size)
+export Boolean create_file (Bit8* path, Bit8* data, Bit32 data_length)
 {
     File  file;
-    Bit8  buffer[512];
-    Bit8  byte_buffer;
-    Bit64 count;
-    Bit32 remind;
-    Bit32 i;
     Bit32 bytes_writed;
 
     if(file_exist(path))
@@ -71,28 +66,10 @@ export Boolean create_file (Bit8* path, Bit64 size)
 
     file = CreateFileA(path, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
 
-    count = size / 512;
-    remind = size % 512;
+    WriteFile(file, data, data_length, &bytes_writed, 0);
 
-    clear_memory(buffer, 512);
-
-    for(i = 0; i < count; ++i)
-    {
-        WriteFile(file, buffer, 512, &bytes_writed, 0);
-
-        if(bytes_writed != 512)
-            goto error2;
-    }
-
-    byte_buffer = 0;
-
-    for(i = 0; i < remind; ++i)
-    {
-        WriteFile(file, &byte_buffer, 1, &bytes_writed, 0);
-
-        if(bytes_writed != 1)
-            goto error2;
-    }
+    if(bytes_writed != data_length)
+        goto error2;
 
     CloseHandle(file);
 
@@ -100,6 +77,7 @@ export Boolean create_file (Bit8* path, Bit64 size)
 
 error:
     return 0;
+
 error2:
     CloseHandle(file);
     delete_file(path);
@@ -107,72 +85,70 @@ error2:
 }
 
 
-export void delete_file (Bit8* path)
+export Boolean delete_file (Bit8* path)
 {
-    DeleteFileA(path);
+    return DeleteFileA(path);
 }
 
 
-export Bit64 read_from_file (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length)
+export File open_file (Bit8* path)
 {
     File      file;
     File_Data file_data;
-    Bit32     bytes_readed;
 
-    file = OpenFile(path, &file_data, OPEN_FILE_READ);
+    file = OpenFile(path, &file_data, OPEN_READ_AND_WRITE);
 
     if(file_data.error_code)
         goto error;
 
-    if(position)
-        SetFilePointer(file, position, 0, 0);
-
-    ReadFile(file, data, data_length, &bytes_readed, 0);
-    CloseHandle(file);
-
-    return bytes_readed;
+    return file;
 
 error:
     return 0;
 }
 
 
-export Bit64 write_in_file  (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length)
+export Boolean read_from_file (File file, Bit64 position, Bit8* data, Bit32 data_length)
 {
-    File      file;
-    File_Data file_data;
-    Bit32     bytes_writed;
-
-    file = OpenFile(path, &file_data, OPEN_FILE_WRITE);
-
-    if(file_data.error_code)
-        goto error;
+    Bit32 bytes_readed;
 
     if(position)
         SetFilePointer(file, position, 0, 0);
 
-    WriteFile(file, data, data_length, &bytes_writed, 0);
-    CloseHandle(file);
+    if(!ReadFile(file, data, data_length, &bytes_readed, 0) || bytes_readed != data_length)
+        goto error;
 
-    return bytes_writed;
+    return 1;
 
 error:
     return 0;
 }
 
 
-export Bit64 get_file_size  (Bit8* path)
+export Boolean write_in_file (File file, Bit64 position, Bit8* data, Bit32 data_length)
 {
-    File             file;
-    File_Data        file_data;
+    Bit32 bytes_writed;
+
+    if(position)
+        SetFilePointer(file, position, 0, 0);
+
+    if(!WriteFile(file, data, data_length, &bytes_writed, 0) || bytes_writed != data_length)
+        goto error;
+
+    return 1;
+
+error:
+    return 0;
+}
+
+
+export Bit64 get_file_size (File file)
+{
     File_Information file_information;
 
-    file = OpenFile(path, &file_data, OPEN_FILE_READ);
-
-    if(file_data.error_code)
+    if(!GetFileInformationByHandle(file, &file_information))
         goto error;
 
-    GetFileInformationByHandle(file, &file_information);
     CloseHandle(file);
 
     return file_information.size_low;
