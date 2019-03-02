@@ -10,7 +10,7 @@
 #endif
 
 
-procedure a()
+void a()
 {
     for(;;)
     {
@@ -20,7 +20,7 @@ procedure a()
 }
 
 
-procedure b()
+void b()
 {
     for(;;)
     {
@@ -30,7 +30,7 @@ procedure b()
 }
 
 
-N_32 main()
+Bit32 main()
 {
     printf("\nthread ID %d\n", run_thread(a, 0));
     printf("\nthread ID %d\n", run_thread(b, 0));

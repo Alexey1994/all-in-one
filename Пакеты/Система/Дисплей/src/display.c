@@ -11,10 +11,10 @@
 #endif
 
 
-N_32 main()
+Bit32 main()
 {
-    N_32             i;
-    N_32             number_of_displays;
+    Bit32            i;
+    Bit32            number_of_displays;
     Display_Settings settings;
 
     number_of_displays = get_number_of_displays();

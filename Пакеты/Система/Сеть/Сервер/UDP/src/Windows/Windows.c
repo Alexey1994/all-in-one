@@ -5,7 +5,7 @@
 Windows_Sockets windows_sockets = {0};
 
 
-function Boolean initialize_Windows_sockets()
+Boolean initialize_Windows_sockets()
 {
     if(!windows_sockets.version)
         return !WSAStartup(0x0202, &windows_sockets);
@@ -14,7 +14,7 @@ function Boolean initialize_Windows_sockets()
 }
 
 
-procedure deinitialize_Windows_sockets()
+void deinitialize_Windows_sockets()
 {
     if(windows_sockets.version)
         WSACleanup();
@@ -23,12 +23,12 @@ procedure deinitialize_Windows_sockets()
 }
 
 
-procedure listen_UDP_Server_requests (UDP_Server *server)
+void listen_UDP_Server_requests (UDP_Server* server)
 {
     Address client_address;
-    N_32    client_address_length;
+    Bit32   client_address_length;
     Byte    buffer[UDP_SERVER_RECEIVE_BUFFER_SIZE];
-    Z_32    buffer_data_size;
+    int     buffer_data_size;
 
     while(server->server_is_running)
     {
@@ -54,7 +54,7 @@ stop:
 }
 
 
-export function Boolean initialize_UDP_Server (UDP_Server *server, Address *server_address, function Boolean (*on_request) (Address *client_address, Byte *data, N_32 data_length, Byte *attributes), Byte *attributes)
+export Boolean initialize_UDP_Server (UDP_Server* server, Address* server_address, Boolean (*on_request) (Address* client_address, Bit8* data, Bit32 data_length, Bit8* attributes), Bit8* attributes)
 {
     if(!initialize_Windows_sockets())
         goto error;
@@ -86,7 +86,7 @@ error:
 }
 
 
-export procedure deinitialize_UDP_Server (UDP_Server *server)
+export void deinitialize_UDP_Server (UDP_Server* server)
 {
     server->server_is_running = 0;
 }

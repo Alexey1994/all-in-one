@@ -6,41 +6,42 @@
 
 typedef struct
 {
-    N_16  version;
-    N_16  high_version;
-    Byte  description[257];
-    Byte  system_status[129];
-    N_32  maximum_sockets;
-    N_32  maximum_UDP_size;
-    Byte *vendor_info;
+    Bit16  version;
+    Bit16  high_version;
+    Bit8   description[257];
+    Bit8   system_status[129];
+    Bit32  maximum_sockets;
+    Bit32  maximum_UDP_size;
+    Bit8*  vendor_info;
 }
 Windows_Sockets;
 
 typedef struct
 {
-    Z_16 family;
-    N_16 port;
-    N_32 in_address;
-    Byte zero[8];
+    //Z_16 family;
+    Bit16 family;
+    Bit16 port;
+    Bit32 in_address;
+    Bit8  zero[8];
 }
 Windows_Socket_Address_Info;
 
 typedef struct
 {
-    Byte  *host_name;
-    Byte **aliases;
-    N_16   address_type;
-    N_16   length;
-    Byte **address_list;
+    Bit8*  host_name;
+    Bit8** aliases;
+    Bit16  address_type;
+    Bit16  length;
+    Bit8** address_list;
 }
 Host_Data;
 
 
-import function  N_32       WSAStartup    (N_16 version, Windows_Sockets *sockets);
-import function  Host_Data* gethostbyname (Byte *host);
-import function  N_16       htons         (N_16 port);
-import function  Z_32       socket        (N_32 family, N_32 type, N_32 protocol);
-import function  N_32       closesocket   (Z_32 socket);
-import function  N_32       connect       (Z_32 conection, Windows_Socket_Address_Info *address_info, N_32 size_of_address_info);
-import function  N_32       send          (Z_32 connection, Byte *data, N_32 length_data, N_32 flags);
-import function  N_32       recv          (Z_32 connection, Byte *data, N_32 length_data, N_32 flags);
+import Bit32       WSAStartup    (Bit16 version, Windows_Sockets* sockets);
+import Host_Data*  gethostbyname (Bit8* host);
+import Bit16       htons         (Bit16 port);
+import int         socket        (Bit32 family, Bit32 type, Bit32 protocol);
+import Bit32       closesocket   (Z_32 socket);
+import Bit32       connect       (Z_32 socket, Windows_Socket_Address_Info* address_info, Bit32 size_of_address_info);
+import Bit32       send          (Z_32 socket, Bit8* data, Bit32 length_data, Bit32 flags);
+import Bit32       recv          (Z_32 socket, Bit8* data, Bit32 length_data, Bit32 flags);

@@ -1,6 +1,6 @@
-export function Byte* run_thread (procedure (*thread_function)(), Byte *arg)
+export Bit32 run_thread (procedure (*thread_function)(), Bit8* arg)
 {
-	N_32 thread_id;
+	Bit32 thread_id;
 
 	CreateThread(0, 0, thread_function, arg, 0, &thread_id);
 
@@ -8,7 +8,7 @@ export function Byte* run_thread (procedure (*thread_function)(), Byte *arg)
 }
 
 
-export procedure sleep_thread (N_32 milliseconds)
+export void sleep_thread (Bit32 milliseconds)
 {
 	Sleep(milliseconds);
 }

@@ -3,8 +3,8 @@
 #define WINDOWS_RELEASE_MEMORY         0x8000
 
 
-import function  Byte* VirtualAlloc (Byte *start_address, N_32 size, N_32 type, N_32 protection);
-import procedure       VirtualFree  (Byte *address, N_32 size, N_32 type);
+import Bit8* VirtualAlloc (Bit8* start_address, Bit32 size, Bit32 type, Bit32 protection);
+import void  VirtualFree  (Bit8* address, Bit32 size, Bit32 type);
 
 
 #include "Windows.c"

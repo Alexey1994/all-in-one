@@ -7,16 +7,16 @@
 
 typedef struct
 {
-    N_32 socket;
+    Bit32 socket;
 }
 TCP_Client;
 
 
-import function  Boolean initialize_TCP_client   (TCP_Client* connection, Address* address);
-import procedure         deinitialize_TCP_client (TCP_Client* connection);
+import Boolean initialize_TCP_client   (TCP_Client* connection, Address* address);
+import void    deinitialize_TCP_client (TCP_Client* connection);
 
-import function          write_in_TCP_client     (TCP_Client* connection, Byte* data, N_32 length_data);
-import function  N_32    read_from_TCP_client    (TCP_Client* connection, Byte* data, N_32 length_data);
+import Bit32   write_in_TCP_client     (TCP_Client* connection, Bit8* data, Bit32 length_data);
+import Bit32   read_from_TCP_client    (TCP_Client* connection, Bit8* data, Bit32 length_data);
 
 #define TCP_CLIENT(context, address)\
 {\

@@ -4,10 +4,10 @@
 Windows_Sockets TCP_Sockets = {0};
 
 
-export function Boolean initialize_TCP_client (TCP_Client* connection, Address* address)
+export Boolean initialize_TCP_client (TCP_Client* connection, Address* address)
 {
     Windows_Socket_Address_Info  address_info;
-    Host_Data                   *host_data;
+    Host_Data*                   host_data;
     Z_32                         connection_socket;
 
     if(!TCP_Sockets.version)
@@ -31,19 +31,19 @@ error:
 }
 
 
-export procedure deinitialize_TCP_client (TCP_Client* connection)
+export void deinitialize_TCP_client (TCP_Client* connection)
 {
     closesocket(connection->socket);
 }
 
 
-export function write_in_TCP_client (TCP_Client* connection, Byte* data, N_32 length_data)
+export Bit32 write_in_TCP_client (TCP_Client* connection, Bit8* data, Bit32 length_data)
 {
-    send(connection->socket, data, length_data, 0);
+    return send(connection->socket, data, length_data, 0);
 }
 
 
-export function N_32 read_from_TCP_client (TCP_Client* connection, Byte* data, N_32 length_data)
+export Bit32 read_from_TCP_client (TCP_Client* connection, Bit8* data, Bit32 length_data)
 {
     return recv(connection->socket, data, length_data, 0);
 }

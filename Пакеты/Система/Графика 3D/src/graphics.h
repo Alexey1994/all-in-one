@@ -4,17 +4,17 @@
 
 typedef struct
 {
-    N_32 width;
-    N_32 height;
-    Byte *data;
-    Byte *system_graphics;
+    Bit32 width;
+    Bit32 height;
+    Bit8* data;
+    Bit8* system_graphics;
 }
 Graphics;
 
 
-import procedure initialize_graphics   (Graphics *graphics, N_32 width, N_32 height);
-import procedure draw_graphics         (Graphics *graphics);
-import procedure deinitialize_graphics (Graphics *graphics);
+import void initialize_graphics   (Graphics* graphics, Bit32 width, Bit32 height);
+import void draw_graphics         (Graphics* graphics);
+import void deinitialize_graphics (Graphics* graphics);
 
 
 #define GRAPHICS(width, height)\

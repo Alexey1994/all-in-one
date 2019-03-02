@@ -7,24 +7,24 @@
 
 typedef struct
 {
-    N_16  version;
-    N_16  high_version;
-    Byte  description[257];
-    Byte  system_status[129];
-    N_32  maximum_sockets;
-    N_32  maximum_UDP_size;
-    Byte *vendor_info;
+    Bit16  version;
+    Bit16  high_version;
+    Bit8   description[257];
+    Bit8   system_status[129];
+    Bit32  maximum_sockets;
+    Bit32  maximum_UDP_size;
+    Bit8*  vendor_info;
 }
 Windows_Sockets;
 
 
-import function  N_32  WSAStartup      (N_16 version, Windows_Sockets *sockets);
-import procedure       WSACleanup      ();
-import function  N_32  WSAGetLastError ();
+import Bit32  WSAStartup      (Bit16 version, Windows_Sockets* sockets);
+import void   WSACleanup      ();
+import Bit32  WSAGetLastError ();
 
-import function  N_32 closesocket (Z_32 socket);
-import function  N_32 bind        (Z_32 conection, Address *address, N_32 size_of_address);
-import function  N_32 recvfrom    (Z_32 conection, Byte *data, N_32 length, N_32 flags, Address *address, N_32 size_of_address);
+import Bit32 closesocket (Z_32 socket);
+import Bit32 bind        (Z_32 conection, Address* address, Bit32 size_of_address);
+import Bit32 recvfrom    (Z_32 conection, Bit8* data, Bit32 length, Bit32 flags, Address* address, Bit32 size_of_address);
 
 
 #endif //SYSTEM_NETWORK_SERVER_UDP_WINDOWS

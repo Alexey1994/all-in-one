@@ -1,4 +1,7 @@
-export function Boolean pressed_key (N_32 key_code)
+#include "Windows.h"
+
+
+export Boolean pressed_key (Bit32 key_code)
 {
     if(GetAsyncKeyState(key_code) & 0b1000000000000000)
         return 1;

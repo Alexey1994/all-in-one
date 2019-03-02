@@ -11,11 +11,14 @@
 #endif
 
 
-N_32 main()
+Bit32 main()
 {
-    ALLOCATE_MEMORY(32)
-        printf(memory);
-    END_ALLOCATE_MEMORY
+    MEMORY(m, 32)
+        m[0] = 'H';
+        m[1] = 'i';
+        m[2] = '\0';
+        printf(m);
+    END_MEMORY(m)
 
     return 0;
 }

@@ -4,7 +4,7 @@
 Windows_Sockets windows_sockets = {0};
 
 
-function Boolean initialize_Windows_sockets()
+Boolean initialize_Windows_sockets()
 {
     if(!windows_sockets.version)
         return !WSAStartup(0x0202, &windows_sockets);
@@ -13,7 +13,7 @@ function Boolean initialize_Windows_sockets()
 }
 
 
-procedure deinitialize_Windows_sockets()
+void deinitialize_Windows_sockets()
 {
     if(windows_sockets.version)
         WSACleanup();
@@ -22,9 +22,9 @@ procedure deinitialize_Windows_sockets()
 }
 
 
-export function Boolean initialize_address (Address *address, Byte *host, Byte *port, N_32 protocol)
+export Boolean initialize_address (Address* address, Bit8* host, Bit8* port, Network_Protocol protocol)
 {
-    Address_Info *address_info;
+    Address_Info* address_info;
     Address_Info  hints;
 
     if(!initialize_Windows_sockets())

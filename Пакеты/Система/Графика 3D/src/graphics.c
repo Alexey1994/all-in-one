@@ -3,7 +3,7 @@
 
 
 #ifdef __WIN32__
-# include "Windows/Windows.h"
+# include "Windows/Windows.c"
 #endif
 
 #ifdef __x86_32_bit__
@@ -11,9 +11,9 @@
 #endif
 
 
-N_32 main()
+Bit32 main()
 {
-    N_32 data[128 * 128];
+    Bit32 data[128 * 128];
 
     cycle(0, 128 * 128, 1)
         data[i] = 128 << 24;

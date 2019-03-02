@@ -5,16 +5,16 @@
 #define new(length) allocate_memory(sizeof(length))
 
 
-import function  Byte* allocate_memory (N_32 size);
-import procedure       free_memory     (Byte *memory_address);
+import Bit8* allocate_memory (Bit32 size);
+import void  free_memory     (Bit8* memory_address);
 
 
-#define ALLOCATE_MEMORY(size)\
+#define MEMORY(context, size)\
 {\
-    Byte *memory = allocate_memory((size));
+    Bit8* context = allocate_memory((size));
 
-#define END_ALLOCATE_MEMORY\
-    free_memory(memory);\
+#define END_MEMORY(context)\
+    free_memory(context);\
 }
 
 

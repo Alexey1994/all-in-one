@@ -22,13 +22,13 @@ import procedure         clear_buffer             (Buffer *buffer);
 export void remove_from_buffer (Buffer* buffer, N_32 index, N_32 size_of_data, Byte* data);
 
 
-#define BUFFER(reserve)\
+#define BUFFER(context, reserve)\
 {\
-    Buffer buffer;\
-    initialize_buffer(&buffer, (reserve));
+    Buffer context;\
+    initialize_buffer(&context, (reserve));
 
-#define END_BUFFER\
-    deinitialize_buffer(&buffer);\
+#define END_BUFFER(context)\
+    deinitialize_buffer(&context);\
 }
 
 #define add_in_buffer(buffer, data, length)\

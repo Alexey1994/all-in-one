@@ -10,7 +10,7 @@
 #endif
 
 
-function N_32 main()
+Bit32 main()
 {
     for(;;)
         printf("%d %d\n", get_mouse_coord_x(), get_mouse_coord_y());

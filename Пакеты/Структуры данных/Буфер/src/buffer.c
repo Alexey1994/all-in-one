@@ -87,7 +87,7 @@ export void remove_from_buffer (Buffer* buffer, N_32 index, N_32 size_of_data, B
 
 function N_32 main()
 {
-    BUFFER(1)
+    BUFFER(buffer, 1)
         write_in_buffer(&buffer, 'H');
         write_in_buffer(&buffer, 'i');
         write_in_buffer(&buffer, '!');
@@ -98,7 +98,7 @@ function N_32 main()
         remove_from_buffer(&buffer, 0, 4, &outt);
 
         printf("%s\n", buffer.data);
-    END_BUFFER
+    END_BUFFER(buffer)
 
     return 0;
 }

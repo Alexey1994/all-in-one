@@ -40,18 +40,18 @@ Brush;
 
 typedef struct
 {
-    N_32            structure_size;
-    N_32            style;
-    function N_32 (*window_procedure)();
-    N_32            class;
-    Byte           *window;
-    N_16           *instance;
-    Icon           *icon;
-    Cursor         *cursor;
-    Brush          *background;
-    Byte           *menu_name;
-    Byte           *class_name;
-    Icon           *small_icon;
+    Bit32            structure_size;
+    Bit32            style;
+    function Bit32 (*window_procedure)();
+    Bit32            class;
+    Bit8*            window;
+    Bit16*           instance;
+    Icon*            icon;
+    Cursor*          cursor;
+    Brush*           background;
+    Bit8*            menu_name;
+    Bit8*            class_name;
+    Icon*            small_icon;
 }
 Window_Class;
 
@@ -84,43 +84,43 @@ Windows_Point;
 
 typedef struct
 {
-    Byte          *window;
-    N_32           message;
-    N_32          *parameters1;
-    Z_32          *parameters2;
-    N_32           time;
+    Bit8*          window;
+    Bit32          message;
+    Bit32*         parameters1;
+    Bit32*         parameters2;
+    Bit32          time;
     Windows_Point  point;
 }
 Windows_Message;
 
 typedef struct
 {
-    N_16  size;
-    N_16  nVersion;
-    N_32  dwFlags;
-    N_8   iPixelType;
-    N_8   cColorBits;
-    N_8   cRedBits;
-    N_8   cRedShift;
-    N_8   cGreenBits;
-    N_8   cGreenShift;
-    N_8   cBlueBits;
-    N_8   cBlueShift;
-    N_8   cAlphaBits;
-    N_8   cAlphaShift;
-    N_8   cAccumBits;
-    N_8   cAccumRedBits;
-    N_8   cAccumGreenBits;
-    N_8   cAccumBlueBits;
-    N_8   cAccumAlphaBits;
-    N_8   cDepthBits;
-    N_8   cStencilBits;
-    N_8   cAuxBuffers;
-    N_8   iLayerType;
-    N_8   bReserved;
-    N_32  dwLayerMask;
-    N_32  dwVisibleMask;
-    N_32  dwDamageMask;
+    Bit16  size;
+    Bit16  nVersion;
+    Bit32  dwFlags;
+    Bit8   iPixelType;
+    Bit8   cColorBits;
+    Bit8   cRedBits;
+    Bit8   cRedShift;
+    Bit8   cGreenBits;
+    Bit8   cGreenShift;
+    Bit8   cBlueBits;
+    Bit8   cBlueShift;
+    Bit8   cAlphaBits;
+    Bit8   cAlphaShift;
+    Bit8   cAccumBits;
+    Bit8   cAccumRedBits;
+    Bit8   cAccumGreenBits;
+    Bit8   cAccumBlueBits;
+    Bit8   cAccumAlphaBits;
+    Bit8   cDepthBits;
+    Bit8   cStencilBits;
+    Bit8   cAuxBuffers;
+    Bit8   iLayerType;
+    Bit8   bReserved;
+    Bit32  dwLayerMask;
+    Bit32  dwVisibleMask;
+    Bit32  dwDamageMask;
 }
 Windows_Pixel_Format_Descriptor;
 
@@ -128,27 +128,27 @@ Windows_Pixel_Format_Descriptor;
 typedef struct
 {
     Window_Class  class;
-    Byte         *context;
-    Byte         *window;
-    Byte         *graphics_context;
+    Bit8*         context;
+    Bit8*         window;
+    Bit8*         graphics_context;
 }
 Windows_Graphics;
 
 
-import procedure          PostQuitMessage  (N_32 exit_code);
-import function  N_32     DefWindowProcA   (Byte* window, N_32 message, N_16* parameter1, N_32* parameter2);
-import function  Icon*    LoadIconA        (Byte* instance, Byte* icon_name);
-import function  Cursor*  LoadCursorA      (Byte* instance, Byte* cursor_name);
-import function  N_16     RegisterClassExA (Window_Class* class);
-import function  N_32     ShowWindow       (Byte* window, N_32 options);
-import function  N_32     SetWindowLongA   (Byte* window, N_32 field_index, N_32 value);
-import function  N_32     GetWindowLongA   (Byte* window, N_32 field_index);
-import function  Byte*    GetDC            (Byte* window);
-import function  N_32     PeekMessageA     (Windows_Message* message, Byte* window, N_32 filter_min, N_32 filter_max, N_32 remove_message);
-import function  Z_32     DispatchMessageA (Windows_Message* message);
-import function  N_32     TranslateMessage (Windows_Message* message);
+import void     PostQuitMessage  (N_32 exit_code);
+import N_32     DefWindowProcA   (Byte* window, N_32 message, N_16* parameter1, N_32* parameter2);
+import Icon*    LoadIconA        (Byte* instance, Byte* icon_name);
+import Cursor*  LoadCursorA      (Byte* instance, Byte* cursor_name);
+import N_16     RegisterClassExA (Window_Class* class);
+import N_32     ShowWindow       (Byte* window, N_32 options);
+import N_32     SetWindowLongA   (Byte* window, N_32 field_index, N_32 value);
+import N_32     GetWindowLongA   (Byte* window, N_32 field_index);
+import Byte*    GetDC            (Byte* window);
+import N_32     PeekMessageA     (Windows_Message* message, Byte* window, N_32 filter_min, N_32 filter_max, N_32 remove_message);
+import Z_32     DispatchMessageA (Windows_Message* message);
+import N_32     TranslateMessage (Windows_Message* message);
 
-import function  Byte*   CreateWindowExA(
+import Byte* CreateWindowExA(
     N_32 extended_style,
     Byte *class_name,
     Byte *window_name,
@@ -163,12 +163,12 @@ import function  Byte*   CreateWindowExA(
     N_32 *parameters
 );
 
-import function N_32 ChoosePixelFormat(Byte *context, Windows_Pixel_Format_Descriptor *format_descriptor);
-import function Boolean SetPixelFormat(Byte *context, N_32 format, Windows_Pixel_Format_Descriptor *format_descriptor);
+import N_32    ChoosePixelFormat(Byte *context, Windows_Pixel_Format_Descriptor *format_descriptor);
+import Boolean SetPixelFormat(Byte *context, N_32 format, Windows_Pixel_Format_Descriptor *format_descriptor);
 
-import function Byte* wglCreateContext(Byte* context);
-import function Boolean wglDeleteContext(Byte* graphics_context);
-import procedure wglSwapBuffers(Byte* context);
+import Byte*   wglCreateContext(Byte* context);
+import Boolean wglDeleteContext(Byte* graphics_context);
+import void    wglSwapBuffers(Byte* context);
 
 typedef enum
 {
@@ -208,18 +208,15 @@ typedef enum
 }
 GL_Blend_Factor;
 
-import procedure glDrawPixels(N_32 width, N_32 height, GL_Data_Format format, GL_Data_Type type, Byte* pixels);
-import procedure glRasterPos2f(R_32 x, R_32 y);
+import void glDrawPixels (N_32 width, N_32 height, GL_Data_Format format, GL_Data_Type type, Byte* pixels);
+import void glRasterPos2f (R_32 x, R_32 y);
 
-import procedure glEnable(GL_Option option);
-import procedure glBlendFunc(GL_Blend_Factor source_factor, GL_Blend_Factor destination_factor);
+import void glEnable (GL_Option option);
+import void glBlendFunc (GL_Blend_Factor source_factor, GL_Blend_Factor destination_factor);
 
-import procedure glColor3f(R_32 red, R_32 green, R_32 blue);
-import procedure glVertex3f(R_32 x, R_32 y, R_32 z);
-import procedure glBegin(GL_Begin_Mode mode);
-import procedure glEnd();
-import procedure glClear(GL_Clear_Mode mode);
-import procedure glClearColor(R_32 red, R_32 green, R_32 blue, R_32 alpha);
-
-
-#include "Windows.c"
+import void glColor3f (R_32 red, R_32 green, R_32 blue);
+import void glVertex3f (R_32 x, R_32 y, R_32 z);
+import void glBegin (GL_Begin_Mode mode);
+import void glEnd ();
+import void glClear (GL_Clear_Mode mode);
+import void glClearColor (R_32 red, R_32 green, R_32 blue, R_32 alpha);

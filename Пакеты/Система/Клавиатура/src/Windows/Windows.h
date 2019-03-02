@@ -1,4 +1,1 @@
-import function N_32 GetAsyncKeyState(N_32 key);
-
-
-#include "Windows.c"
+import Bit32 GetAsyncKeyState (Bit32 key);

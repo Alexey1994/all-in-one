@@ -2,7 +2,7 @@
 
 
 #ifdef __WIN32__
-# include "Windows/Windows.h"
+# include "Windows/Windows.c"
 #endif
 
 #ifdef __linux__
@@ -14,7 +14,7 @@
 #endif
 
 
-N_32 main()
+Bit32 main()
 {
     while(!pressed_key('Q'));
 

@@ -13,9 +13,8 @@
 
 N_32 main()
 {
-    File file;
-    Byte data[256] = {};
-    N_32 bytes;
+    Bit8  data[256] = {};
+    Bit32 bytes;
 
     if(!create_file("a.txt", 513))
         printf("File exist\n");

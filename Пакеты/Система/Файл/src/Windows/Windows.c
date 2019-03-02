@@ -2,49 +2,49 @@
 #include <memory.h>
 
 
-import function File    OpenFile    (Byte *path, File_Data *file_data, N_32 flags);
-import function Boolean CloseHandle (File file);
+import File OpenFile    (Bit8* path, File_Data* file_data, Bit32 flags);
+import Bit8 CloseHandle (File file);
 
-import function File CreateFileA(
-    Byte *name,
-    N_32  flags1,              // режим доступа
-    N_32  flags2,              // разрешить другим процессам доступ к файлу, 0 - запретить всё
-    void *security_attributes, // 0 если не наследуется дочерними процессами
-    N_32  flags4,              // CREATE_NEW | CREATE_ALWAYS | OPEN_EXISTING | OPEN_ALWAYS | TRUNCATE_EXISTING
-    N_32  flags5,
+import File CreateFileA(
+    Bit8* name,
+    Bit32 flags1,              // режим доступа
+    Bit32 flags2,              // разрешить другим процессам доступ к файлу, 0 - запретить всё
+    void* security_attributes, // 0 если не наследуется дочерними процессами
+    Bit32 flags4,              // CREATE_NEW | CREATE_ALWAYS | OPEN_EXISTING | OPEN_ALWAYS | TRUNCATE_EXISTING
+    Bit32 flags5,
     File  file
 );
 
-import function Boolean DeleteFileA (Byte *path);
+import Bit8 DeleteFileA (Bit8* path);
 
-import function Boolean ReadFile(
-    File  file,
-    Byte *buffer,
-    N_32  buffer_length,
-    N_32 *bytes_readed,
-    Byte *overlapped
+import Bit8 ReadFile(
+    File   file,
+    Bit8*  buffer,
+    Bit32  buffer_length,
+    Bit32* bytes_readed,
+    Bit8*  overlapped
 );
 
-import function Boolean WriteFile(
-    File  file,
-    Byte *data,
-    N_32  data_length,
-    N_32 *bytes_writed,
-    Byte *overlapped
+import Bit8 WriteFile(
+    File   file,
+    Bit8*  data,
+    Bit32  data_length,
+    Bit32* bytes_writed,
+    Bit8*  overlapped
 );
 
 //https://docs.microsoft.com/ru-ru/windows/desktop/api/fileapi/nf-fileapi-setfilepointer
-import function N_32 SetFilePointer(
-    File  file,
-    N_32  position,
-    N_32 *position_high,
-    N_32  method
+import Bit32 SetFilePointer(
+    File   file,
+    Bit32  position,
+    Bit32* position_high,
+    Bit32  method
 );
 
-import function Boolean GetFileInformationByHandle(File file, File_Information *information);
+import Bit32 GetFileInformationByHandle(File file, File_Information* information);
 
 
-function Boolean file_exist (Byte *path)
+Bit32 file_exist (Bit8* path)
 {
     File      file;
     File_Data file_data;
@@ -56,15 +56,15 @@ function Boolean file_exist (Byte *path)
 }
 
 
-export function Boolean create_file (Byte *path, N_64 size)
+export Boolean create_file (Bit8* path, Bit64 size)
 {
-    File file;
-    Byte buffer[512];
-    Byte byte_buffer;
-    N_64 count;
-    N_32 remind;
-    N_32 i;
-    N_32 bytes_writed;
+    File  file;
+    Bit8  buffer[512];
+    Bit8  byte_buffer;
+    Bit64 count;
+    Bit32 remind;
+    Bit32 i;
+    Bit32 bytes_writed;
 
     if(file_exist(path))
         goto error;
@@ -107,17 +107,17 @@ error2:
 }
 
 
-export procedure delete_file (Byte *path)
+export void delete_file (Bit8* path)
 {
     DeleteFileA(path);
 }
 
 
-export function N_64 read_from_file (Byte *path, N_64 position, Byte *data, N_32 data_length)
+export Bit64 read_from_file (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length)
 {
     File      file;
     File_Data file_data;
-    N_32      bytes_readed;
+    Bit32     bytes_readed;
 
     file = OpenFile(path, &file_data, OPEN_FILE_READ);
 
@@ -137,11 +137,11 @@ error:
 }
 
 
-export function N_64 write_in_file  (Byte *path, N_64 position, Byte *data, N_32 data_length)
+export Bit64 write_in_file  (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length)
 {
     File      file;
     File_Data file_data;
-    N_32      bytes_writed;
+    Bit32     bytes_writed;
 
     file = OpenFile(path, &file_data, OPEN_FILE_WRITE);
 
@@ -161,7 +161,7 @@ error:
 }
 
 
-export function N_64 get_file_size  (Byte *path)
+export Bit64 get_file_size  (Bit8* path)
 {
     File             file;
     File_Data        file_data;

@@ -2,8 +2,8 @@
 #define SYSTEM_THREAD_H_INCLUDED
 
 
-import function  Byte* run_thread   (procedure (*thread_function)(), Byte *arg);
-import procedure       sleep_thread (N_32 milliseconds);
+import Bit32 run_thread   (void (*thread_function)(), Bit8* arg);
+import void  sleep_thread (Bit32 milliseconds);
 
 
 #endif // SYSTEM_THREAD_H_INCLUDED

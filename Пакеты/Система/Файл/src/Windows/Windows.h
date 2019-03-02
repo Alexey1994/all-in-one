@@ -9,7 +9,7 @@
 
 #define FILE_ATTRIBUTE_NORMAL 128
 
-typedef Byte* File;
+typedef Bit8* File;
 
 //https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-openfile
 typedef enum
@@ -22,12 +22,12 @@ Open_File_Mode;
 //https://docs.microsoft.com/ru-ru/windows/desktop/api/winbase/ns-winbase-_ofstruct
 typedef struct
 {
-    N_8     size_struct;
-    Boolean file_on_hard_disk;
-    N_16    error_code;
-    N_16    reserved1;
-    N_16    reserved2;
-    Byte    path_name[256];
+    Bit8  size_struct;
+    Bit8  file_on_hard_disk;
+    Bit16 error_code;
+    Bit16 reserved1;
+    Bit16 reserved2;
+    Bit8  path_name[256];
 }
 File_Data;
 
@@ -43,23 +43,23 @@ File_Information_Classes;
 
 typedef struct
 {
-    N_32 dwLowDateTime;
-    N_32 dwHighDateTime;
+    Bit32 dwLowDateTime;
+    Bit32 dwHighDateTime;
 }
 File_Time;
 
 //https://docs.microsoft.com/ru-ru/windows/desktop/api/fileapi/ns-fileapi-_by_handle_file_information
 typedef struct
 {
-    N_32      attributes;
+    Bit32     attributes;
     File_Time creation_time;
     File_Time last_access_time;
     File_Time last_write_time;
-    N_32      volume_serial_number;
-    N_32      size_high;
-    N_32      size_low;
-    N_32      number_of_links;
-    N_32      file_index_high;
-    N_32      file_index_low;
+    Bit32     volume_serial_number;
+    Bit32     size_high;
+    Bit32     size_low;
+    Bit32     number_of_links;
+    Bit32     file_index_high;
+    Bit32     file_index_low;
 }
 File_Information;

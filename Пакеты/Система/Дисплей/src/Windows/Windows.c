@@ -3,22 +3,22 @@
 
 
 //https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-enumdisplaydevicesa
-import function Boolean EnumDisplayDevicesA (Byte *name, N_32 display_number, Dispaly *display, N_32 flags);
+import Boolean EnumDisplayDevicesA (Bit8* name, Bit32 display_number, Dispaly* display, Bit32 flags);
 
 //https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-enumdisplaysettingsa
 //http://jasinskionline.com/windowsapi/ref/e/enumdisplaysettings.html
-import function Boolean EnumDisplaySettingsA (Dispaly *display, N_32 mode, Dispaly_Mode *display_mode);
+import Boolean EnumDisplaySettingsA (Dispaly* display, Bit32 mode, Dispaly_Mode* display_mode);
 
 //https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-changedisplaysettingsa
-import function N_32 ChangeDisplaySettingsA (Dispaly_Mode *display_mode, N_32 flags);
+import Bit32 ChangeDisplaySettingsA (Dispaly_Mode* display_mode, Bit32 flags);
 
 
-export function N_32 get_number_of_displays ()
+export Bit32 get_number_of_displays ()
 {
     Dispaly display;
-    N_32    status;
-    N_32    i;
-    N_32    number_of_displays;
+    Bit32   status;
+    Bit32   i;
+    Bit32   number_of_displays;
 
     display.structure_size = sizeof(Dispaly);
 
@@ -36,12 +36,12 @@ export function N_32 get_number_of_displays ()
     return number_of_displays;
 }
 
-function N_32 get_display_mode(N_32 display_number, Dispaly_Mode *display_mode)
+Bit32 get_display_mode (Bit32 display_number, Dispaly_Mode* display_mode)
 {
     Dispaly display;
-    N_32    status;
-    N_32    current_display_number;
-    N_32    i;
+    Bit32   status;
+    Bit32   current_display_number;
+    Bit32   i;
 
     display.structure_size = sizeof(Dispaly);
 
@@ -70,7 +70,7 @@ error:
 }
 
 
-export procedure get_display_settings (N_32 display_number, Display_Settings *settings)
+export void get_display_settings (Bit32 display_number, Display_Settings* settings)
 {
     Dispaly_Mode display_mode;
 
@@ -82,7 +82,7 @@ export procedure get_display_settings (N_32 display_number, Display_Settings *se
 }
 
 
-export procedure set_display_settings (N_32 display_number, Display_Settings *settings)
+export void set_display_settings (Bit32 display_number, Display_Settings* settings)
 {
     Dispaly_Mode display_mode;
 

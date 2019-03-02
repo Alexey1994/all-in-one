@@ -1,12 +1,12 @@
 //https://docs.microsoft.com/en-us/windows/desktop/api/wingdi/ns-wingdi-_display_devicea
 typedef struct
 {
-    N_32 structure_size;
-    Byte device_name[32];
-    Byte device_context_name[128];
-    N_32 state;
-    Byte device_id[128];
-    Byte device_key[128];
+    Bit32 structure_size;
+    Bit8  device_name[32];
+    Bit8  device_context_name[128];
+    Bit32 state;
+    Bit8  device_id[128];
+    Bit8  device_key[128];
 }
 Dispaly;
 
@@ -24,30 +24,30 @@ Display_States;
 //https://docs.microsoft.com/en-us/windows/desktop/api/wingdi/ns-wingdi-_devicemodea
 typedef struct
 {
-    Byte device_name[32];
-    N_32 version;
-    N_16 structure_size;
-    N_16 private_structure_size;
-    N_32 fields;
+    Bit8 device_name[32];
+    Bit32 version;
+    Bit16 structure_size;
+    Bit16 private_structure_size;
+    Bit32 fields;
 
     union {
         struct
         {
-            N_16 orientaion;
-            N_16 paper_size;
-            N_16 paper_length;
-            N_16 paper_width;
-            N_16 scale;
-            N_16 copies;
-            N_16 default_score;
-            N_16 quality;
+            Bit16 orientaion;
+            Bit16 paper_size;
+            Bit16 paper_length;
+            Bit16 paper_width;
+            Bit16 scale;
+            Bit16 copies;
+            Bit16 default_score;
+            Bit16 quality;
         }
         printer;
 
         struct
         {
-            N_32 x;
-            N_32 y;
+            Bit32 x;
+            Bit32 y;
         }
         position;
 
@@ -55,43 +55,43 @@ typedef struct
         {
             struct
             {
-                N_32 x;
-                N_32 y;
+                Bit32 x;
+                Bit32 y;
             }
             position;
 
-            N_32 orientaion;
-            N_32 output;
+            Bit32 orientaion;
+            Bit32 output;
         }
         display;
     };
 
-    N_16 color;
-    N_16 duplex;
-    N_16 y_resolution;
-    N_16 option;
-    N_16 collate;
-    Byte form_name[32];
-    N_16 pixels_per_inch;
-    N_32 bits_per_pixel;
-    N_32 width;
-    N_32 height;
+    Bit16 color;
+    Bit16 duplex;
+    Bit16 y_resolution;
+    Bit16 option;
+    Bit16 collate;
+    Bit8  form_name[32];
+    Bit16 pixels_per_inch;
+    Bit32 bits_per_pixel;
+    Bit32 width;
+    Bit32 height;
 
     union
     {
-        N_32 display_flags;
-        N_32 NUP;
+        Bit32 display_flags;
+        Bit32 NUP;
     };
 
-    N_32 frequency;
-    N_32 ICM_method;
-    N_32 ICM_intent;
-    N_32 media_type;
-    N_32 dither_type;
-    N_32 reserved1;
-    N_32 reserved2;
-    N_32 panning_width;
-    N_32 panning_height;
+    Bit32 frequency;
+    Bit32 ICM_method;
+    Bit32 ICM_intent;
+    Bit32 media_type;
+    Bit32 dither_type;
+    Bit32 reserved1;
+    Bit32 reserved2;
+    Bit32 panning_width;
+    Bit32 panning_height;
 }
 Dispaly_Mode;
 

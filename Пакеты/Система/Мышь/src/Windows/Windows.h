@@ -1,13 +1,13 @@
 typedef struct
 {
-    Z_32 x;
-    Z_32 y;
+    Bit32 x;
+    Bit32 y;
 }
 Windows_Point;
 
 
-import function N_32 GetAsyncKeyState (N_32 key);
-import function N_32 GetCursorPos     (Windows_Point *coords);
+import Bit32 GetAsyncKeyState (Bit32 key);
+import Bit32 GetCursorPos     (Windows_Point* coords);
 
 
 #include "Windows.c"

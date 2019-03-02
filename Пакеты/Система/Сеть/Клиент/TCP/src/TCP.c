@@ -9,11 +9,11 @@
 # include "Linux/Linux.c"
 #endif
 
-N_32 main()
+Bit32 main()
 {
     Address address;
-    Byte    buffer[256];
-    N_32    length;
+    Bit8    buffer[256];
+    Bit32   length;
 
     initialize_address(&address, "vk.com", "80", TCP_PROTOCOL);
 

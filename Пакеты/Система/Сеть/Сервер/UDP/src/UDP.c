@@ -26,13 +26,13 @@ internal procedure initialize_UDP_Connection_from_UDP_Server (UDP_Connection *co
 N_32 y = 0;
 N_32 x = 0;
 
-function Boolean on_request (Address *client_address, N_32 *data, N_32 data_length, Graphics *graphics)
+function Boolean on_request (Address* client_address, Bit32* data, Bit32 data_length, Graphics* graphics)
 {
     //printf("request %d bytes\n %s \n", data_length, data);
 
     //printf("%d\n", count);
 
-    N_32 *display = graphics->data;
+    Bit32* display = graphics->data;
     data_length /= 4;
 
     cycle(0, data_length, 1)

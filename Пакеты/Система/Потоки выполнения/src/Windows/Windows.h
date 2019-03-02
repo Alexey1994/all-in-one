@@ -1,20 +1,20 @@
 typedef struct
 {
-	N_32     length;
-	Byte    *security_descriptor;
-	Boolean  is_inherit_handle;
+	Bit32 length;
+	Bit8* security_descriptor;
+	Bit8  is_inherit_handle;
 }
 Windows_Sequrity_Attributes;
 
 
-import procedure       Sleep        (N_32 milliseconds);
-import function  Byte* CreateThread (
-	Windows_Sequrity_Attributes *security_attributes,
-	N_32                         stack_size,
-	procedure                  (*thread_function)(Byte *arguments),
-	Byte                        *attributes,
-	N_32                         creation_flags,
-	N_32                        *thread_id
+import void  Sleep        (Bit32 milliseconds);
+import Bit32 CreateThread (
+	Windows_Sequrity_Attributes* security_attributes,
+	Bit32                        stack_size,
+	void                       (*thread_function)(Bit8* arguments),
+	Bit8*                        attributes,
+	Bit32                        creation_flags,
+	Bit32*                       thread_id
 );
 
 #include "Windows.c"

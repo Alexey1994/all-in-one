@@ -1,3 +1,6 @@
+#include "Windows.h"
+
+
 N_32 update_window_state(Byte *window, N_32 message, N_32 *parameters_1, Z_32 *parameters_2)
 {
     if(message == CLOSE_WINDOW_MESSAGE)

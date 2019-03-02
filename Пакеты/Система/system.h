@@ -33,12 +33,14 @@ typedef unsigned short int     Bit16;
 typedef unsigned long int      Bit32;
 typedef unsigned long long int Bit64;
 
+/*
 typedef struct
 {
     Bit32 byte_address;
     Bit8  bit_address;
 }
 Address;
+*/
 
 //#define read_bit(address, out)\
 //    out = (*((Bit8*)address.)

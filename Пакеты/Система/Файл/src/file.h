@@ -2,11 +2,11 @@
 #define SYSTEM_FILE_H_INCLUDED
 
 
-import function  Boolean create_file    (Byte *path, N_64 size);
-import procedure         delete_file    (Byte *path);
-import function  N_64    read_from_file (Byte *path, N_64 position, Byte *data, N_32 data_length);
-import function  N_64    write_in_file  (Byte *path, N_64 position, Byte *data, N_32 data_length);
-import function  N_64    get_file_size  (Byte *path);
+import Boolean create_file    (Bit8* path, Bit64 size);
+import void    delete_file    (Bit8* path);
+import Bit64   read_from_file (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length);
+import Bit64   write_in_file  (Bit8* path, Bit64 position, Bit8* data, Bit32 data_length);
+import Bit64   get_file_size  (Bit8* path);
 
 
 #endif // SYSTEM_FILE_H_INCLUDED

@@ -86,7 +86,7 @@
 */
 
 
-import function Boolean pressed_key (N_32 key_code);
+import Boolean pressed_key (Bit32 key_code);
 
 
 #endif //SYSTEM_KEYBOARD_H_INCLUDED
