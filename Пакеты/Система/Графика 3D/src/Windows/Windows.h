@@ -216,6 +216,12 @@ typedef enum
 }
 GL_Blend_Factor;
 
+typedef enum
+{
+    GL_MODELVIEW = 0x1700
+}
+GL_Matrix_Mode;
+
 import void glDrawPixels (N_32 width, N_32 height, GL_Data_Format format, GL_Data_Type type, Byte* pixels);
 import void glRasterPos2f (R_32 x, R_32 y);
 

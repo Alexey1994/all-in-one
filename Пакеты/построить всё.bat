@@ -225,4 +225,18 @@ REM @copy system.h "%headers%\"
 
 @cd ../../
 
+@cd "Графика/3D"
+@mkdir "%headers%\graphics\3D"
+
+@cd "Скелет\src"
+@tcc -shared ragdoll.c -o graphics_3D_ragdoll.dll "%def%\system_graphics3D.def"
+@copy graphics_3D_ragdoll.dll "%bin%\"
+@del graphics_3D_ragdoll.dll
+@copy graphics_3D_ragdoll.def "%def%\"
+@del graphics_3D_ragdoll.def
+@copy ragdoll.h "%headers%\graphics\3D\"
+@cd ../../
+
+@cd ../../
+
 @echo [##################################################]

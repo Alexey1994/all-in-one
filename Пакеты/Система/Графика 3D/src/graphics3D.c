@@ -21,18 +21,17 @@ Bit32 main()
 
     GRAPHICS(1440, 900)
         loop
-            glClearColor(0, 0, 0, 0);
-            glClear(GL_COLOR_BUFFER_BIT);
+            gl_clear();
 
-            glColor3f(1, 0, 0);
-            glBegin(GL_TRIANGLES);
-                glVertex3f(0, 0, 0);
-                glVertex3f(1, 0, 0);
-                glVertex3f(0, 1, 0);
-            glEnd();
+            gl_color(1, 0, 0);
+            gl_begin();
+                gl_vertex(0, 0, 0);
+                gl_vertex(1, 0, 0);
+                gl_vertex(0, 1, 0);
+            gl_end();
 
-            glRasterPos2f(0, 0);
-            glDrawPixels(128, 128, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            //glRasterPos2f(0, 0);
+            //glDrawPixels(128, 128, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
             DRAW
         end

@@ -16,6 +16,16 @@ import void initialize_graphics   (Graphics* graphics, Bit32 width, Bit32 height
 import void draw_graphics         (Graphics* graphics);
 import void deinitialize_graphics (Graphics* graphics);
 
+import void gl_clear();
+import void gl_begin();
+import void gl_color(float red, float green, float blue);
+import void gl_vertex(float x, float y, float z);
+import void gl_end();
+
+import void gl_scale(float x, float y, float z);
+import void gl_rotate(float angle, float x, float y, float z);
+import void gl_translate(float x, float y, float z);
+
 
 #define GRAPHICS(width, height)\
 {\

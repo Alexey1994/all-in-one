@@ -140,6 +140,8 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
     return;
 
@@ -181,4 +183,46 @@ export procedure deinitialize_graphics (Graphics *graphics)
 {
     free_memory(graphics->system_graphics);
     free_memory(graphics->data);
+}
+
+
+export void gl_clear()
+{
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+export void gl_begin()
+{
+    glBegin(GL_TRIANGLES);
+}
+
+export void gl_color(float red, float green, float blue)
+{
+    glColor3f(red, green, blue);
+}
+
+export void gl_vertex(float x, float y, float z)
+{
+    glVertex3f(x, y, z);
+}
+
+export void gl_end()
+{
+    glEnd();
+}
+
+export void gl_scale(float x, float y, float z)
+{
+    glScalef(x, y, z);
+}
+
+export void gl_rotate(float angle, float x, float y, float z)
+{
+    glRotatef(angle, x, y, z);
+}
+
+export void gl_translate(float x, float y, float z)
+{
+    glTranslatef(x, y, z);
 }
