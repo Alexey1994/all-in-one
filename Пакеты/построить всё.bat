@@ -63,6 +63,15 @@ REM @copy system.h "%headers%\"
 @copy graphics.h "%headers%\system\"
 @cd ../../
 
+@cd "Графика 3D\src"
+@tcc -shared graphics3D.c -o system_graphics3D.dll "%def%\system_memory.def" "%def%\opengl32.def" "%def%\gdi32.def" "%def%\user32.def"
+@copy system_graphics3D.dll "%bin%\"
+@del system_graphics3D.dll
+@copy system_graphics3D.def "%def%\"
+@del system_graphics3D.def
+@copy graphics3D.h "%headers%\system\"
+@cd ../../
+
 @cd "Мышь\src"
 @tcc -shared mouse.c -o system_mouse.dll
 @copy system_mouse.dll "%bin%\"

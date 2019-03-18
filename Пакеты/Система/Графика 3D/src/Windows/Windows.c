@@ -100,9 +100,9 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
 
     pixel_format_descriptor.size = sizeof(Windows_Pixel_Format_Descriptor);
     pixel_format_descriptor.nVersion = 0;
-    pixel_format_descriptor.dwFlags = 0;
-    pixel_format_descriptor.iPixelType = 0;
-    pixel_format_descriptor.cColorBits = 0;
+    pixel_format_descriptor.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+    pixel_format_descriptor.iPixelType = PFD_TYPE_RGBA;
+    pixel_format_descriptor.cColorBits = 24;
     pixel_format_descriptor.cRedBits = 0;
     pixel_format_descriptor.cRedShift = 0;
     pixel_format_descriptor.cGreenBits = 0;
@@ -116,10 +116,10 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
     pixel_format_descriptor.cAccumGreenBits = 0;
     pixel_format_descriptor.cAccumBlueBits = 0;
     pixel_format_descriptor.cAccumAlphaBits = 0;
-    pixel_format_descriptor.cDepthBits = 0;
+    pixel_format_descriptor.cDepthBits = 16;
     pixel_format_descriptor.cStencilBits = 0;
     pixel_format_descriptor.cAuxBuffers = 0;
-    pixel_format_descriptor.iLayerType = 0;
+    pixel_format_descriptor.iLayerType = PFD_MAIN_PLANE;
     pixel_format_descriptor.bReserved = 0;
     pixel_format_descriptor.dwLayerMask = 0;
     pixel_format_descriptor.dwVisibleMask = 0;

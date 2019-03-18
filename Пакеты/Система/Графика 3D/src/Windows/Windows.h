@@ -20,6 +20,14 @@
 #define USER_DATA                                   -21
 
 
+//wingdi.h
+#define PFD_DRAW_TO_WINDOW  4
+#define PFD_SUPPORT_OPENGL  32
+#define PFD_DOUBLEBUFFER    1
+#define PFD_TYPE_RGBA   0
+#define PFD_MAIN_PLANE  0
+
+
 typedef struct
 {
 

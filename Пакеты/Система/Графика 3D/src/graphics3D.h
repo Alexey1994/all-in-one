@@ -1,5 +1,5 @@
-#ifndef SYSTEM_GRAPHICS_H_INCLUDED
-#define SYSTEM_GRAPHICS_H_INCLUDED
+#ifndef SYSTEM_GRAPHICS3D_H_INCLUDED
+#define SYSTEM_GRAPHICS3D_H_INCLUDED
 
 
 typedef struct
@@ -30,4 +30,4 @@ import void deinitialize_graphics (Graphics* graphics);
 }
 
 
-#endif // SYSTEM_GRAPHICS_H_INCLUDED
+#endif // SYSTEM_GRAPHICS3D_H_INCLUDED
