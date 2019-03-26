@@ -27,7 +27,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
-			<Add library="system_graphics" />
+			<Add library="system_graphics3D" />
 			<Add library="data-structures_buffer" />
 		</Linker>
 		<Unit filename="../src/polygon.c">
