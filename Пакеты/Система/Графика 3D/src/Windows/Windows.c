@@ -11,12 +11,7 @@ N_32 update_window_state(Byte *window, N_32 message, N_32 *parameters_1, Z_32 *p
 
     if(message == DESTROY_WINDOW_MESSAGE)
         return 0;
-/*
-    if(message == PAINT_WINDOW_MESSAGE)
-    {
-        return 0;
-    }
-*/
+
     return DefWindowProcA(window, message, parameters_1, parameters_2);
 }
 
@@ -38,7 +33,7 @@ void EnableOpenGL(Byte *window, Byte *hDC, Byte* hRC)
 }
 
 
-export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 height)
+export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 height, Boolean is_2D_graphics)
 {
     Windows_Graphics*               system_graphics;
     N_32                            status;
@@ -49,7 +44,9 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
 
     graphics->width  = width;
     graphics->height = height;
-    graphics->data = allocate_memory(width * height * 4);
+    graphics->data = is_2D_graphics
+        ? allocate_memory(width * height * 4)
+        : 0;
     graphics->system_graphics = system_graphics;
 
     system_graphics->class.structure_size   = sizeof(Window_Class);
@@ -146,8 +143,8 @@ export procedure initialize_graphics (Graphics *graphics, N_32 width, N_32 heigh
     return;
 
 error:
-    //free_memory(graphics->data);
-    //free_memory(system_graphics);
+    free_memory(graphics->data);
+    free_memory(system_graphics);
 }
 
 
@@ -168,21 +165,23 @@ export procedure draw_graphics (Graphics *graphics)
             DispatchMessageA(&message);
         }
     }
-    else
-    {
-        //InvalidateRect(system_graphics->window, 0, 1);
-        //RedrawWindow(system_graphics->window, 0, 0, UPDATE_NOW);
-        //UpdateWindow(system_graphics->window);
 
-        wglSwapBuffers(system_graphics->context);
+    if(graphics->data)
+    {
+        glRasterPos2f(-1, -1);
+        glDrawPixels(1440, 900, GL_RGBA, GL_UNSIGNED_BYTE, graphics->data);
     }
+        
+    wglSwapBuffers(system_graphics->context);
 }
 
 
 export procedure deinitialize_graphics (Graphics *graphics)
 {
     free_memory(graphics->system_graphics);
-    free_memory(graphics->data);
+
+    if(graphics->data)
+        free_memory(graphics->data);
 }
 
 
@@ -225,4 +224,9 @@ export void gl_rotate(float angle, float x, float y, float z)
 export void gl_translate(float x, float y, float z)
 {
     glTranslatef(x, y, z);
+}
+
+export void gl_clear_view_matrix()
+{
+    glLoadIdentity();
 }

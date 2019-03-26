@@ -35,7 +35,7 @@
 			<Add library="system_memory" />
 			<Add library="opengl32" />
 		</Linker>
-		<Unit filename="../src/graphics.c">
+		<Unit filename="../src/graphics3D.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

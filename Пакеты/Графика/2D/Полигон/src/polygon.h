@@ -2,7 +2,7 @@
 #define GRAPHICS_2D_POLYGON_H_INCLUDED
 
 
-#include <system/graphics.h>
+#include <system/graphics3d.h>
 #include <data-structures/buffer.h>
 
 

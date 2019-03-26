@@ -250,12 +250,13 @@ function N_32 main()
 {
     GRAPHICS(1440, 900)
         loop
-            clear(&graphics);
-/*
+            gl_clear();
+            //clear(&graphics);
+
             LINE(500, 500, get_mouse_coord_x(), get_mouse_coord_y())
-                DRAW_LINE(255 * 256)
+                DRAW_LINE(255 * 256 + (255 << 24))
             END_LINE
-*/
+
             DRAW
         end
     END_GRAPHICS

@@ -65,7 +65,7 @@ export procedure draw_rectangle (Graphics *graphics, Rectangle *rectangle, N_32 
 
     for(y = 0; y < rectangle_height; ++y)
     {
-        line = graphics->data + ((rectangle->y + y) * graphics->width + rectangle->x) * 4;
+        line = graphics->data + (rectangle->y + y) * graphics->width + rectangle->x;
 
         for(x = 0; x < rectangle_width; ++x, ++line)
             *line = color;
@@ -78,12 +78,24 @@ function N_32 main()
     Graphics graphics;
     Rectangle rectangle;
 
+    GRAPHICS(1440, 900)
+        loop
+            gl_clear();
+
+            initialize_rectangle(&rectangle, 100, 100, 100, 100);
+            draw_rectangle(&graphics, &rectangle, 255 + (255 << 24));
+
+            DRAW
+        end
+    END_GRAPHICS
+
+    /*
     initialize_graphics(&graphics, 1440, 900);
     initialize_rectangle(&rectangle, 100, 100, 100, 100);
     draw_rectangle(&graphics, &rectangle, 255);
 
     for(;;)
         draw_graphics(&graphics);
-
+*/
     return 0;
 }

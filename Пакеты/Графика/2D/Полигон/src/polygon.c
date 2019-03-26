@@ -155,25 +155,25 @@ function N_32 main()
     Polygon  polygon;
     Point_2D point;
 
-    initialize_graphics(&graphics, 1440, 900);
+    GRAPHICS(1440, 900)
+        initialize_polygon(&polygon);
+                point.x = 110;
+                point.y = 20;
+                add_point_in_polygon(&polygon, point);
 
-    initialize_polygon(&polygon);
-        point.x = 110;
-        point.y = 20;
-        add_point_in_polygon(&polygon, point);
+                point.x = 200;
+                point.y = 200;
+                add_point_in_polygon(&polygon, point);
 
-        point.x = 200;
-        point.y = 200;
-        add_point_in_polygon(&polygon, point);
+                point.x = 100;
+                point.y = 200;
+                add_point_in_polygon(&polygon, point);
+        draw_polygon(&graphics, &polygon, 255 + (255 << 24));
 
-        point.x = 100;
-        point.y = 200;
-        add_point_in_polygon(&polygon, point);
-
-    draw_polygon(&graphics, &polygon, 255);
-
-    for(;;)
-        draw_graphics(&graphics);
+        loop
+            DRAW
+        end
+    END_GRAPHICS
 
     return 0;
 }

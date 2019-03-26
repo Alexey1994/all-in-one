@@ -2,7 +2,7 @@
 #define GRAPHICS_RECTANGLE_H_INCLUDED
 
 
-#include <system/graphics.h>
+#include <system/graphics3D.h>
 
 
 typedef struct

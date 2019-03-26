@@ -11,17 +11,29 @@
 #endif
 
 
-Bit32 main()
+void test_2D()
 {
-    Bit32 data[128 * 128];
-
-    cycle(0, 128 * 128, 1)
-        data[i] = 128 << 24;
-    end
-
     GRAPHICS(1440, 900)
         loop
             gl_clear();
+
+            cycle(0, graphics.width * graphics.height, 1)
+                graphics.data[i] = (128 << 24) + 128;
+            end
+
+            DRAW
+        end
+    END_GRAPHICS
+}
+
+
+void test_3D()
+{
+    GRAPHICS_3D(1440, 900)
+        loop
+            gl_clear();
+
+            gl_rotate(1, 1, 1, 1);
 
             gl_color(1, 0, 0);
             gl_begin();
@@ -30,12 +42,16 @@ Bit32 main()
                 gl_vertex(0, 1, 0);
             gl_end();
 
-            //glRasterPos2f(0, 0);
-            //glDrawPixels(128, 128, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
             DRAW
         end
     END_GRAPHICS
+}
+
+
+Bit32 main()
+{
+    test_2D();
+    //test_3D();
 
     return 0;
 }

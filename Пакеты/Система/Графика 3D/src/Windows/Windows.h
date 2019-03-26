@@ -234,3 +234,13 @@ import void glBegin (GL_Begin_Mode mode);
 import void glEnd ();
 import void glClear (GL_Clear_Mode mode);
 import void glClearColor (R_32 red, R_32 green, R_32 blue, R_32 alpha);
+
+import void glMatrixMode(GL_Matrix_Mode mode);
+import void glLoadIdentity();
+import void glPushMatrix();
+import void glPopMatrix();
+import void glLoadMatrixf(R_32* matrix);
+
+import void glTranslatef (R_32 x, R_32 y, R_32 z);
+import void glScalef (R_32 x, R_32 y, R_32 z);
+import void glRotatef (R_32 angle, R_32 x, R_32 y, R_32 z);
